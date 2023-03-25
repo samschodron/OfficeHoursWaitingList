@@ -6,6 +6,6 @@ const router = express.Router();
 /*
     path from root: /waitingRoom/createWaitingRoom
 */
-router.post('/createWaitingRoom', createWaitingRoom)
+router.get('/createWaitingRoom', createWaitingRoom)
 
 export default router;

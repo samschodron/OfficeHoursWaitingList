@@ -1,11 +1,7 @@
 import waitingRoomRoutes from './routes/waitingRoom.js'
 import bodyParser from "body-parser";
 
-// Define "require"
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-
-const express = require('express')
+import express from 'express'
 const app = express()
 const port = process.env.PORT || 31415
 
@@ -20,24 +16,10 @@ app.listen(port, () => {
     console.log(`Server started on port ${port}`)
 })
 
-// set up db connection
-var mysql = require('mysql');
+// to test db connection
+import db from './dbconfig.js'
 
-var connection = mysql.createConnection({
-    host: "avocado.ciip1144g4cq.us-east-1.rds.amazonaws.com",
-    user: "admin",
-    password: "teamAvocado!",
-    port: "3306",
-    database: "office_hours_waiting_list",
-    // host: process.env.DB_HOST,
-    // port: process.env.DB_PORT,
-    // user: process.env.DB_USER,
-    // password: process.env.DB_PASSWORD,
-});
-
-connection.connect(function (err) {
+db.query("SELECT * FROM teaching_assistant", function (err, result, fields) {
     if (err) throw err;
-    console.log("Connected!");
-});
-
-connection.end();
+    console.log('result: ', result);
+})
