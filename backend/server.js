@@ -20,6 +20,7 @@ app.listen(port, () => {
     console.log(`Server started on port ${port}`)
 })
 
+/*
 // set up db connection
 var mysql = require('mysql');
 
@@ -40,4 +41,4 @@ connection.connect(function (err) {
     console.log("Connected!");
 });
 
-connection.end();
+connection.end();*/
