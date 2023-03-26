@@ -17,9 +17,9 @@ app.listen(port, () => {
 })
 
 // to test db connection
-import db from './dbconfig.js'
+// import db from './dbconfig.js'
 
-db.query("SELECT * FROM teaching_assistant", function (err, result, fields) {
-    if (err) throw err;
-    console.log('result: ', result);
-})
+// db.query("SELECT * FROM teaching_assistant", function (err, result, fields) {
+//     if (err) throw err;
+//     console.log('result: ', result);
+// })
