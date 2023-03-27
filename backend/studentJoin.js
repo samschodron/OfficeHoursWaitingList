@@ -5,9 +5,6 @@ import db from './dbconfig.js'
    the wait list.
     */
 function studentJoin(code, firstName, secondName) {
-    /* Going to need to create some sort of random number generator
-       and check if the ID is in the table. */
-
     const id = 1; // TODO: decide how we want to generate unique ID
     const time = Date.now();
 
