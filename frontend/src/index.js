@@ -11,10 +11,10 @@ const createColor = (mainColor) => augmentColor({ color: { main: mainColor } });
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#556cd6',
+            main: '#7b50f2',
         },
         secondary: {
-            main: '#19857b',
+            main: '#ffe900',
         },
         error: {
             main: '#f44336',
@@ -28,7 +28,27 @@ const theme = createTheme({
         button: {
             textTransform: 'none'
         }
-    }
+    },
+    components: {
+        MuiOutlinedInput: {
+            styleOverrides: {
+                root: {
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                        borderColor: '#7300ff', // Change this to the desired focus color for the outline
+                    },
+                },
+            },
+        },
+        MuiInputLabel: {
+            styleOverrides: {
+                root: {
+                    '&.Mui-focused': {
+                        color: '#7300ff', // Change this to the desired focus color for the label
+                    },
+                },
+            },
+        },
+    },
 });
 
 ReactDOM.render(

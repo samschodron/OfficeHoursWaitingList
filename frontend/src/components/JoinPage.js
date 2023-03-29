@@ -1,35 +1,61 @@
 import React from 'react';
-import { Container, Typography, Box, Button } from '@mui/material';
-import homepageImage from '../images/Background.png';
-import logo from '../images/AOWL.png';
-import template from '../images/phonetemp.png';
+import {Box, Button, TextField, Typography} from '@mui/material';
 
-const HomePage = () => {
+const JoinPage = () => {
     return (
-        <Box className="image-container">
-            <img src={homepageImage} alt="Homepage" className="fullscreen-image" />
-            <Container maxWidth="sm">
-                <img src={logo} alt="Logo" className={"logo-image"}/>
-                <img src={template} alt="phone mockup" className={"mockup-image"}/>
-                <Box className="middle-left content">
-                    <Typography variant="h3" component="h1" gutterBottom>
-                        Join A Room
-                    </Typography>
-                    <Typography variant="body1" gutterBottom>
-                        Create and join waitlists as educators and learners.
-                    </Typography>
-                    <Box className="button-home">
-                        <Button variant="contained" className="shadow" style={{background: 'linear-gradient(to right, #BE50F2, #3888FF)'}} sx={{ borderRadius: '30px', minWidth: '35%', minHeight: '3rem' }}>
-                            Join A List
-                        </Button>
-                        <Button color="buttWhite" variant="contained" className="shadow" sx={{ marginLeft: '2rem', borderRadius: '30px', minWidth: '35%', height: '3rem' }}>
-                            Create A List
-                        </Button>
-                    </Box>
+        <Box>
+            <rect className="background-rect">
+                <Typography className="join-header" variant="h1" component="h1" style={{fontWeight: 'bold'}} gutterBottom>
+                    Join a Room
+                </Typography>
+                <div className="textFieldW">
+                    <TextField
+                        label="Name"
+                        variant="outlined"
+                        fullWidth
+                        sx={{
+                            '& .MuiOutlinedInput-root': {
+                                borderRadius: '15px',
+                            },
+                            '& .MuiInputLabel-shrink': {
+                                transform: 'translate(35%, .3%) scale(0.75)',
+                            },
+                        }}
+                        InputProps={{
+                            notched: false,
+                        }}
+                    />
+                </div>
+                <div className="textFieldW" style={{marginLeft: '2rem'}}>
+                        <TextField
+                            label="Room Code"
+                            variant="outlined"
+                            fullWidth
+                            sx={{
+                                '& .MuiOutlinedInput-root': {
+                                    borderRadius: '15px',
+                                },
+                                '& .MuiInputLabel-shrink': {
+                                    transform: 'translate(20%, .3%) scale(0.75)',
+                                },
+                                '& .MuiOutlinedInput-input': {
+                                    paddingLeft: '5.5%', // Adjust this value to move the input lower in the TextField
+                                },
+                            }}
+                            InputProps={{
+                                notched: false,
+                            }}
+                        />
+                    </div>
+                <Box className="button-join">
+                    <Button variant="contained" className="shadow" sx={{ color: 'white', borderRadius: '30px', minWidth: '35%',
+                        minHeight: '3rem', background: '#000000', '&:hover': {background: '#000000', opacity: 0.7, transition: '.2s'}}}>
+                        Join
+                    </Button>
                 </Box>
-            </Container>
+            </rect>
         </Box>
     );
 };
 
-export default HomePage;
+export default JoinPage;

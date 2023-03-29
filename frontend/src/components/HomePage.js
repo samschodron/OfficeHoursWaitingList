@@ -8,10 +8,13 @@ import template from '../images/phonetemp.png';
 const HomePage = () => {
     return (
         <Box className="image-container">
+            {/*Background image*/}
             <img src={homepageImage} alt="Homepage" className="fullscreen-image" />
+
             <Container maxWidth="sm">
                 <img src={logo} alt="Logo" className={"logo-image"}/>
                 <img src={template} alt="phone mockup" className={"mockup-image"}/>
+
                 <Box className="middle-left content">
                     <Typography variant="h3" component="h1" gutterBottom>
                         The Office Hour Waitlist for Teachers and Students.
@@ -19,9 +22,11 @@ const HomePage = () => {
                     <Typography variant="body1" gutterBottom>
                         Create and join waitlists as educators and learners.
                     </Typography>
+
                     <Box className="button-home">
-                        <Link to="/join-page" className="shadow" style={{ textDecoration: 'none' }}>
-                        <Button variant="contained" className="shadow" style={{background: 'linear-gradient(to right, #BE50F2, #3888FF)'}} sx={{ borderRadius: '30px', minWidth: '35%', minHeight: '3rem' }}>
+                        <Link to="/join-page" className="shadow" style={{textDecoration: 'none'}}>
+                        <Button variant="contained" className="shadow" sx={{ borderRadius: '30px', minWidth: '35%',
+                            minHeight: '3rem', background: 'linear-gradient(to right, #BE50F2, #3888FF)', '&:hover': {opacity: 0.5, transition: '.2s'}}}>
                             Join A List
                         </Button>
                         </Link>
@@ -29,6 +34,7 @@ const HomePage = () => {
                             Create A List
                         </Button>
                     </Box>
+
                 </Box>
             </Container>
         </Box>

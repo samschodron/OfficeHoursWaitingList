@@ -1,3 +1,9 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Home Page Styles */
 .image-container {
     position: relative;
     overflow: hidden;
@@ -7,12 +13,8 @@
 
 .fullscreen-image {
     position: absolute;
-    /*top: 50%;*/
     left: 75%;
-    /*min-width: 100%;*/
-    /*min-height: 100%;*/
     transform: translate(-50%, -50%);
-    /*object-fit: cover;*/
     z-index: -1;
 }
 
@@ -21,7 +23,6 @@
     max-width: 30%;
     max-height: 30%;
     transform: translate(-275%, -20%);
-    /*object-fit: cover;*/
     z-index: -1;
 }
 
@@ -42,11 +43,6 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08) !important;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-}
-
 .App {
     margin: 0;
     padding: 0;
@@ -63,4 +59,34 @@ body {
 .button-home {
     padding-top: 10rem;
     text-align: left;
+}
+
+/* Join Page Styles */
+
+.button-join {
+    text-align: right;
+    transform: translate(-10%, 21rem);
+}
+
+.background-rect {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to bottom, #7b50f2, #3888FF);
+}
+
+.textFieldW {
+    display: inline-block;
+    border-Radius: 15px;
+    background-Color: white;
+    overflow: visible;
+    width: 40%;
+    transform: translate(0,18rem);
+}
+
+.join-header {
+    color: white;
+    text-align: left;
+    transform: translate(2rem,8rem);
+
 }
