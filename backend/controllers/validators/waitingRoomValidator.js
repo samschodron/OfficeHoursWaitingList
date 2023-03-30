@@ -7,9 +7,3 @@ export const createWaitingRoomSchema = yup
         waiting_room_name: yup.string().trim().required()
     })
     .required();
-
-export const getAllStudentsInWaitingRoomSchema = yup
-    .object({
-        room_code_pk: yup.string().trim().required()
-    })
-    .required();

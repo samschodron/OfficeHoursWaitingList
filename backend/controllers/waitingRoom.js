@@ -1,7 +1,6 @@
 import db from '../dbconfig.js'
 import crypto from 'crypto'
 import { createWaitingRoomSchema } from './validators/waitingRoomValidator.js'
-import { getAllStudentsInWaitingRoomSchema } from './validators/waitingRoomValidator.js'
 
 function generateUniqueRoomCode(size = 15) {
     return crypto
@@ -41,11 +40,12 @@ export const createWaitingRoom = async (req, res) => {
 }
 
 export const getAllStudentsInWaitingRoom = async (req, res) => {
-    const { body } = req
+    const queryParams = req.query
     try {
-        const data = getAllStudentsInWaitingRoomSchema.validateSync(body, { abortEarly: false, stripUnknown: true })
-        const roomCode = data['room_code_pk']
-
+        if (!queryParams.roomCode) {
+            return res.status(422).json({ errors: 'roomCode query param is required' });
+        }
+        const roomCode = queryParams.roomCode
         let sqlQuery = `SELECT student_first_name, student_last_name, time_entered FROM student WHERE is_waiting = 1 AND room_code_pk = "${roomCode}" ORDER BY time_entered;`
 
         db.query(sqlQuery, function (error, result, fields) {
