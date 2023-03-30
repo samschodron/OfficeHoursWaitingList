@@ -25,6 +25,7 @@ const WaitingList = () => {
         <div>
             <h1>Waiting List</h1>
             <button onClick={getData}>test api</button>
+            <h1>List of students</h1>
             {studentList.map(student => <h3>{student["student_first_name"]} {student["student_last_name"]}</h3>)}
         </div>
     )
