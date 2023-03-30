@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
-import WaitingList from './WaitingList'
 import { Link } from 'react-router-dom';
 
 const CreateListPage = () => {
