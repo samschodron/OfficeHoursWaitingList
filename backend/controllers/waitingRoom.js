@@ -60,6 +60,7 @@ export const getAllStudentsInWaitingRoom = async (req, res) => {
             }
         });
     } catch (error) {
+        console.log('error here')
         return res.status(422).json({ errors: error.errors });
     }
 }
