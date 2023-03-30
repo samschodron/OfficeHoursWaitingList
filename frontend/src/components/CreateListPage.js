@@ -11,7 +11,7 @@ const CreateListPage = () => {
         <Box>
             <rect className="background-rect">
                 <Typography className="join-header" variant="h1" component="h1" style={{ fontWeight: 'bold' }} gutterBottom>
-                    Create a Room
+                    Create a List
                 </Typography>
                 <div className="textFieldW">
                     <TextField
