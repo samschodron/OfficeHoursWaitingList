@@ -11,8 +11,8 @@ const CreateListPage = () => {
 
     const handleFormInputChange = (event) => {
         const inputName = event.target.name;
-        const inputValue = event.target.value
-        console.log(inputName, inputValue)
+        const inputValue = event.target.value;
+        setFormInput({ ...formInput, [inputName]: inputValue })
     }
 
     const formValidation = () => {
@@ -87,7 +87,7 @@ const CreateListPage = () => {
                     />
                 </div>
                 <Box className="button-join" onClick={formValidation}>
-                    <Link to="/waiting-list" className="shadow" style={{ textDecoration: 'none' }}>
+                    <Link to="/waiting-list" state={formInput} className="shadow" style={{ textDecoration: 'none' }}>
                         <Button variant="contained" className="shadow" sx={{
                             color: 'white', borderRadius: '30px', minWidth: '35%',
                             minHeight: '3rem', background: '#000000', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
