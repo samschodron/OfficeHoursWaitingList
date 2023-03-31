@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import JoinPage from './components/JoinPage';
 import WaitingList from './components/WaitingList';
+import CreateListPage from './components/CreateListPage';
 import './App.css';
 import './styles.css';
 
@@ -35,6 +36,7 @@ const App = () => (
         <Routes>
             <Route path="/" element={<HP />} />
             <Route path="/join-page" element={<JP />} />
+            <Route path="/create-list-page" element={<CreateListPage />} />
             <Route path="/waiting-list" element={<WaitingList />} />
         </Routes>
     </div>

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const WaitingList = () => {
+    const location = useLocation()
+    const { firstName, lastName, roomCode } = location.state
     const [studentList, setStudentList] = useState([])
-    const queryParams = {
-        room_code_pk: "12345abcde"
-    }
 
+    // can test with roomCode: 12345abcde
     const updateList = () => {
-        console.log('inside get data func')
-        let url = `http://localhost:31415/waitingRoom/getAllStudentsInWaitingRoom/?roomCode=${queryParams["room_code_pk"]}`
+        let url = `http://localhost:31415/waitingRoom/getAllStudentsInWaitingRoom/?roomCode=${roomCode}`
         fetch(url, {
             method: "GET",
             headers: {
@@ -24,9 +24,11 @@ const WaitingList = () => {
     }
 
     useEffect(() => {
+        updateList()
+
         const interval = setInterval(() => {
             updateList();
-        }, 2000);
+        }, 30000);
 
         return () => clearInterval(interval);
     }, []);
@@ -34,8 +36,9 @@ const WaitingList = () => {
     return (
         <div>
             <h1>Waiting List</h1>
-            <button onClick={updateList}>test api</button>
-            <h1>List of students</h1>
+            <button onClick={updateList}>call api</button>
+            <h1>{firstName} {lastName}'s Waiting List</h1>
+            <h1>Room Code: {roomCode}</h1>
             {studentList.map(student => <h3>{student["student_first_name"]} {student["student_last_name"]}</h3>)}
         </div>
     )
