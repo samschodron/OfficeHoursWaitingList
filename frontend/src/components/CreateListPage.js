@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const CreateListPage = () => {
+    const [formInput, setFormInput] = useState({
+        firstName: "",
+        lastName: "",
+        roomCode: ""
+    })
+
+    const handleFormInputChange = (event) => {
+        const inputName = event.target.name;
+        const inputValue = event.target.value
+        console.log(inputName, inputValue)
+    }
+
     const formValidation = () => {
 
     }
@@ -15,6 +27,7 @@ const CreateListPage = () => {
                 </Typography>
                 <div className="textFieldW">
                     <TextField
+                        name="firstName"
                         label="First Name"
                         variant="outlined"
                         fullWidth
@@ -29,8 +42,10 @@ const CreateListPage = () => {
                         InputProps={{
                             notched: false,
                         }}
+                        onChange={handleFormInputChange}
                     />
                     <TextField
+                        name="lastName"
                         label="Last Name"
                         variant="outlined"
                         fullWidth
@@ -45,10 +60,12 @@ const CreateListPage = () => {
                         InputProps={{
                             notched: false,
                         }}
+                        onChange={handleFormInputChange}
                     />
                 </div>
                 <div className="textFieldW" style={{ marginLeft: '2rem' }}>
                     <TextField
+                        name="roomCode"
                         label="Room Code"
                         variant="outlined"
                         fullWidth
@@ -66,6 +83,7 @@ const CreateListPage = () => {
                         InputProps={{
                             notched: false,
                         }}
+                        onChange={handleFormInputChange}
                     />
                 </div>
                 <Box className="button-join" onClick={formValidation}>
