@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const CreateListPage = () => {
+    const navigate = useNavigate();
     const [formInput, setFormInput] = useState({
         firstName: "",
         lastName: "",
-        roomCode: ""
+        roomName: "",
     })
 
     const handleFormInputChange = (event) => {
@@ -15,8 +16,38 @@ const CreateListPage = () => {
         setFormInput({ ...formInput, [inputName]: inputValue })
     }
 
-    const formValidation = () => {
+    const isEmpty = (str) => {
+        return (!str || str.trim().length === 0);
+    }
 
+    const createWaitingListApi = async () => {
+        let url = `http://localhost:4000/waitingRoom/createWaitingRoom`
+        let response = await fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-type': "application/json"
+            },
+            body: JSON.stringify({
+                teaching_assistant_first_name: formInput["firstName"],
+                teaching_assistant_last_name: formInput["lastName"],
+                waiting_room_name: formInput["roomName"]
+            }),
+        })
+        let jsonResponse = await response.json()
+        let roomCode = jsonResponse["room_code"]
+
+        return roomCode
+    }
+
+    const formIsValid = async () => {
+        for (const property in formInput) {
+            if (isEmpty(formInput[property]) && property !== "roomCode") {
+                return false;
+            }
+        }
+        const roomCode = await createWaitingListApi()
+        navigate('/waiting-list', { state: { formInput: formInput, roomCode: roomCode } });
+        return true;
     }
 
     return (
@@ -65,8 +96,8 @@ const CreateListPage = () => {
                 </div>
                 <div className="textFieldW" style={{ marginLeft: '2rem' }}>
                     <TextField
-                        name="roomCode"
-                        label="Room Code"
+                        name="roomName"
+                        label="Room Name"
                         variant="outlined"
                         fullWidth
                         sx={{
@@ -86,18 +117,16 @@ const CreateListPage = () => {
                         onChange={handleFormInputChange}
                     />
                 </div>
-                <Box className="button-join" onClick={formValidation}>
-                    <Link to="/waiting-list" state={formInput} className="shadow" style={{ textDecoration: 'none' }}>
-                        <Button variant="contained" className="shadow" sx={{
-                            color: 'white', borderRadius: '30px', minWidth: '35%',
-                            minHeight: '3rem', background: '#000000', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
-                        }}>
-                            Join
-                        </Button>
-                    </Link>
+                <Box onClick={formIsValid} className="button-join">
+                    <Button variant="contained" className="shadow" sx={{
+                        color: 'white', borderRadius: '30px', minWidth: '35%',
+                        minHeight: '3rem', background: '#000000', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
+                    }}>
+                        Join
+                    </Button>
                 </Box>
-            </rect>
-        </Box>
+            </rect >
+        </Box >
     );
 };
 

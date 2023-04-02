@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const WaitingList = () => {
-    const location = useLocation()
-    const { firstName, lastName, roomCode } = location.state
+    const { state } = useLocation()
+    const { firstName, lastName, roomName } = state.formInput
+    const roomCode = state.roomCode
+
     const [studentList, setStudentList] = useState([])
 
-    // can test with roomCode: 12345abcde
     const updateList = () => {
-        let url = `http://localhost:31415/waitingRoom/getAllStudentsInWaitingRoom/?roomCode=${roomCode}`
-        fetch(url, {
-            method: "GET",
-            headers: {
-                'Content-type': "application/json"
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                let students = data["query_result"]
-                setStudentList(students)
-                console.log(data)
+        if (roomCode) {
+            let url = `http://localhost:4000/waitingRoom/getAllStudentsInWaitingRoom/?roomCode=${roomCode}`
+            fetch(url, {
+                method: "GET",
+                headers: {
+                    'Content-type': "application/json"
+                }
             })
+                .then(res => res.json())
+                .then(data => {
+                    let students = data["query_result"]
+                    setStudentList(students)
+                    console.log(data)
+                })
+        }
     }
 
     useEffect(() => {
@@ -31,7 +34,7 @@ const WaitingList = () => {
         }, 30000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [roomCode, studentList]);
 
     return (
         <div>

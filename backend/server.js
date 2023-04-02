@@ -4,7 +4,7 @@ import cors from "cors";
 
 import express from 'express'
 const app = express()
-const port = process.env.PORT || 31415
+const port = process.env.PORT || 4000
 
 // for parsing application/ json
 app.use(bodyParser.json())
