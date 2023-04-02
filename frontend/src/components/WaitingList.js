@@ -3,36 +3,31 @@ import { useLocation } from 'react-router-dom';
 
 const WaitingList = () => {
     const { state } = useLocation()
-    const { firstName, lastName, roomName, roomCode } = state
-    console.log('inside waiting list', firstName, lastName, roomName, roomCode)
+    const { firstName, lastName, roomName } = state.formInput
+    const roomCode = state.roomCode
+    console.log('inside waiting list', firstName, lastName, roomCode)
 
     const [studentList, setStudentList] = useState([])
 
     const updateList = () => {
-        // if (roomCode) {
-        //     let url = `http://localhost:4000/waitingRoom/getAllStudentsInWaitingRoom/?roomCode=${roomCode}`
-        //     fetch(url, {
-        //         method: "GET",
-        //         headers: {
-        //             'Content-type': "application/json"
-        //         }
-        //     })
-        //         .then(res => res.json())
-        //         .then(data => {
-        //             let students = data["query_result"]
-        //             setStudentList(students)
-        //             console.log(data)
-        //         })
-        // } else {
-        //     console.log('room code not avail')
-        // }
+        if (roomCode) {
+            let url = `http://localhost:4000/waitingRoom/getAllStudentsInWaitingRoom/?roomCode=${roomCode}`
+            fetch(url, {
+                method: "GET",
+                headers: {
+                    'Content-type': "application/json"
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    let students = data["query_result"]
+                    setStudentList(students)
+                    console.log(data)
+                })
+        } else {
+            console.log('room code not avail')
+        }
     }
-
-
-
-    // useEffect(() => {
-    //     createWaitingListApi()
-    // }, [])
 
     useEffect(() => {
         updateList()

@@ -21,10 +21,10 @@ const CreateListPage = () => {
         return (!str || str.trim().length === 0);
     }
 
-    const createWaitingListApi = () => {
+    const createWaitingListApi = async () => {
         console.log('inside create list api')
         let url = `http://localhost:4000/waitingRoom/createWaitingRoom`
-        return fetch(url, {
+        let response = await fetch(url, {
             method: "POST",
             headers: {
                 'Content-type': "application/json"
@@ -35,13 +35,13 @@ const CreateListPage = () => {
                 waiting_room_name: formInput["roomName"]
             }),
         })
-            .then(res => res.json())
-            .then(data => {
-                let uniqueRoomCode = data['room_code']
-                console.log('room code', data['room_code'])
-                setFormInput({ ...formInput, roomCode: uniqueRoomCode })
-                console.log(formInput)
-            })
+        console.log('resp 1', response)
+        let jsonResponse = await response.json()
+        console.log('resp 2', jsonResponse)
+        console.log('room code resp', jsonResponse["room_code"])
+        let roomCode = jsonResponse["room_code"]
+
+        return roomCode
     }
 
     const formIsValid = async () => {
@@ -52,9 +52,8 @@ const CreateListPage = () => {
                 return false;
             }
         }
-        const response = await createWaitingListApi()
-        console.log('response', response)
-        navigate('/waiting-list', { state: formInput });
+        const roomCode = await createWaitingListApi()
+        navigate('/waiting-list', { state: { formInput: formInput, roomCode: roomCode } });
         return true;
     }
 
