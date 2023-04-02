@@ -5,7 +5,6 @@ const WaitingList = () => {
     const { state } = useLocation()
     const { firstName, lastName, roomName } = state.formInput
     const roomCode = state.roomCode
-    console.log('inside waiting list', firstName, lastName, roomCode)
 
     const [studentList, setStudentList] = useState([])
 
@@ -24,8 +23,6 @@ const WaitingList = () => {
                     setStudentList(students)
                     console.log(data)
                 })
-        } else {
-            console.log('room code not avail')
         }
     }
 

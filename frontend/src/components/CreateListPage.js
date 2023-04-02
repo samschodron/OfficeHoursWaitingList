@@ -8,7 +8,6 @@ const CreateListPage = () => {
         firstName: "",
         lastName: "",
         roomName: "",
-        roomCode: ""
     })
 
     const handleFormInputChange = (event) => {
@@ -22,7 +21,6 @@ const CreateListPage = () => {
     }
 
     const createWaitingListApi = async () => {
-        console.log('inside create list api')
         let url = `http://localhost:4000/waitingRoom/createWaitingRoom`
         let response = await fetch(url, {
             method: "POST",
@@ -35,20 +33,15 @@ const CreateListPage = () => {
                 waiting_room_name: formInput["roomName"]
             }),
         })
-        console.log('resp 1', response)
         let jsonResponse = await response.json()
-        console.log('resp 2', jsonResponse)
-        console.log('room code resp', jsonResponse["room_code"])
         let roomCode = jsonResponse["room_code"]
 
         return roomCode
     }
 
     const formIsValid = async () => {
-        console.log('inside form is valid')
         for (const property in formInput) {
             if (isEmpty(formInput[property]) && property !== "roomCode") {
-                console.log('form is not valid')
                 return false;
             }
         }
