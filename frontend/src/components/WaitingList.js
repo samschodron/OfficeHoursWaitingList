@@ -40,7 +40,8 @@ const WaitingList = () => {
         <div>
             <h1>Waiting List</h1>
             <button onClick={updateList}>call api</button>
-            <h1>{firstName} {lastName}'s Waiting List</h1>
+            <h1>TA: {firstName} {lastName}</h1>
+            <h1>Room name: {roomName}</h1>
             <h1>Room Code: {roomCode}</h1>
             {studentList.map(student => <h3>{student["student_first_name"]} {student["student_last_name"]}</h3>)}
         </div>
