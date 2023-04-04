@@ -7,23 +7,32 @@ import { joinWaitingRoomSchema, leaveWaitingRoomSchema } from './validators/stud
     */
 export const joinWaitingRoom = async (req, res) => {
     const { body } = req;
+
     try {
         const data = joinWaitingRoomSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
+        
+        let studentFirstName = data['student_first_name']
+        let studentLastName = data['student_last_name']
+        let roomCode = data['room_code']
 
-        let teachingAssistantFirstName = data['teaching_assistant_first_name']
-        let teachingAssistantlastName = data['teaching_assistant_last_name']
-        let time = Date.now();
-
-        db.query(`INSERT INTO student (student_first_name, student_last_name, time_entered, time_left, room_ID, is_waiting) OUTPUT studentID_pk VALUES (${firstName}, ${secondName}, ${time}, NULL, ${code}, 1)`, function (err, result, fields) {
+        db.query(`INSERT INTO student (student_first_name, student_last_name, time_entered, time_left, room_code_pk, is_waiting) VALUES ('${studentFirstName}', '${studentLastName}', now(), null, '${roomCode}', 1);`, function (err, result, fields) {
             if (err) {
                 res.status(400).json({ message: 'failed to join a waiting room' })
                 throw err;
             }
-            console.log('Successfully added to the wait list.');
+            console.log(result);
+        })
+
+        db.query(`SELECT LAST_INSERT_ID();`, function (err, result, fields) {
+            if (err) {
+                res.status(400).json({ message: 'failed to join a waiting room' })
+                throw err;
+            }
+            console.log(result);
         })
 
         return res.json({
-            message: 'successfully created waiting room',
+            message: "result",
             data,
             room_code: roomCode
         });
