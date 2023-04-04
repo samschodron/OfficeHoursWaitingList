@@ -11,9 +11,7 @@ const JoinPage = () => {
     })
 
     const handleFormInputChange = (event) => {
-        const inputName = event.target.name;
-        const inputValue = event.target.value;
-        setFormInput({ ...formInput, [inputName]: inputValue })
+        setFormInput({ ...formInput, [event.target.name]: event.target.value })
     }
 
     const isEmpty = (str) => {
@@ -34,9 +32,9 @@ const JoinPage = () => {
             }),
         })
         let jsonResponse = await response.json()
-        let studentID = jsonResponse["studentID_pk"]
+        // let studentID = jsonResponse["studentID_pk"]
 
-        return studentID
+        // return studentID
     }
 
     const formIsValid = async () => {
@@ -45,8 +43,9 @@ const JoinPage = () => {
                 return false;
             }
         }
-        const studentID = await joinWaitingListApi()
-        navigate('/join-list', { state: { formInput: formInput, studentID: studentID } });
+        // const studentID = await joinWaitingListApi()
+        await joinWaitingListApi()
+        navigate('/join-list', { state: { formInput: formInput/*, studentID: studentID*/ } });
         return true;
     }
 
@@ -61,6 +60,7 @@ const JoinPage = () => {
                         name="firstName"
                         label="First Name"
                         variant="outlined"
+                        value={formInput.firstName}
                         fullWidth
                         sx={{
                             '& .MuiOutlinedInput-root': {
@@ -81,6 +81,7 @@ const JoinPage = () => {
                         name="lastName"
                         label="Last Name"
                         variant="outlined"
+                        value={formInput.lastName}
                         fullWidth
                         sx={{
                             '& .MuiOutlinedInput-root': {
@@ -101,6 +102,7 @@ const JoinPage = () => {
                             name="roomCode"
                             label="Room Code"
                             variant="outlined"
+                            value={formInput.roomCode}
                             fullWidth
                             sx={{
                                 '& .MuiOutlinedInput-root': {

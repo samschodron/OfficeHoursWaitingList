@@ -14,7 +14,15 @@ export const joinWaitingRoom = async (req, res) => {
         let studentLastName = data['student_last_name']
         let roomCode = data['room_ID']
 
-        db.query(`INSERT INTO student (student_first_name, student_last_name, time_entered, time_left, room_code_pk, is_waiting) VALUES ('${studentFirstName}', '${studentLastName}', now(), null, '${roomCode}', 1); SELECT LAST_INSERT_ID();`, function (err, result, fields) {
+        db.query(`INSERT INTO student (student_first_name, student_last_name, time_entered, time_left, room_code_pk, is_waiting) VALUES ('${studentFirstName}', '${studentLastName}', now(), null, '${roomCode}', 1);`, function (err, result, fields) {
+            if (err) {
+                res.status(400).json({ message: 'failed to join a waiting room' })
+                throw err;
+            }
+            console.log(result);
+        })
+
+        db.query(`SELECT LAST_INSERT_ID();`, function (err, result, fields) {
             if (err) {
                 res.status(400).json({ message: 'failed to join a waiting room' })
                 throw err;
