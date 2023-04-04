@@ -56,7 +56,30 @@ const CreateListPage = () => {
                 <Typography className="join-header" variant="h1" component="h1" style={{ fontWeight: 'bold' }} gutterBottom>
                     Create a List
                 </Typography>
-                <div className="textFieldW">
+                <div className="textFieldW" style={{ marginLeft: '2rem', marginBottom: '2rem', width: '60%' }}>
+                    <TextField
+                        name="roomName"
+                        label="Room Name"
+                        variant="outlined"
+                        fullWidth
+                        sx={{
+                            '& .MuiOutlinedInput-root': {
+                                borderRadius: '15px',
+                            },
+                            '& .MuiInputLabel-shrink': {
+                                transform: 'translate(20%, .3%) scale(0.75)',
+                            },
+                            '& .MuiOutlinedInput-input': {
+                                paddingLeft: '5.5%', // Adjust this value to move the input lower in the TextField
+                            },
+                        }}
+                        InputProps={{
+                            notched: false,
+                        }}
+                        onChange={handleFormInputChange}
+                    />
+                </div>
+                <div className="textFieldW" style={{ marginLeft: '2rem' }}>
                     <TextField
                         name="firstName"
                         label="First Name"
@@ -75,6 +98,8 @@ const CreateListPage = () => {
                         }}
                         onChange={handleFormInputChange}
                     />
+                </div>
+                <div className="textFieldW" style={{ marginLeft: '2rem' }}>
                     <TextField
                         name="lastName"
                         label="Last Name"
@@ -86,29 +111,6 @@ const CreateListPage = () => {
                             },
                             '& .MuiInputLabel-shrink': {
                                 transform: 'translate(35%, .3%) scale(0.75)',
-                            },
-                        }}
-                        InputProps={{
-                            notched: false,
-                        }}
-                        onChange={handleFormInputChange}
-                    />
-                </div>
-                <div className="textFieldW" style={{ marginLeft: '2rem' }}>
-                    <TextField
-                        name="roomName"
-                        label="Room Name"
-                        variant="outlined"
-                        fullWidth
-                        sx={{
-                            '& .MuiOutlinedInput-root': {
-                                borderRadius: '15px',
-                            },
-                            '& .MuiInputLabel-shrink': {
-                                transform: 'translate(20%, .3%) scale(0.75)',
-                            },
-                            '& .MuiOutlinedInput-input': {
-                                paddingLeft: '5.5%', // Adjust this value to move the input lower in the TextField
                             },
                         }}
                         InputProps={{
