@@ -32,7 +32,7 @@ const JoinPage = () => {
             }),
         })
         let jsonResponse = await response.json()
-        // let studentID = jsonResponse["studentID_pk"]
+        let studentID = jsonResponse["studentID_pk"]
 
         // return studentID
     }

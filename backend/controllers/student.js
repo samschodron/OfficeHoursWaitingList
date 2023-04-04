@@ -12,7 +12,7 @@ export const joinWaitingRoom = async (req, res) => {
 
         let studentFirstName = data['student_first_name']
         let studentLastName = data['student_last_name']
-        let roomCode = data['room_ID']
+        let roomCode = data['room_code']
 
         db.query(`INSERT INTO student (student_first_name, student_last_name, time_entered, time_left, room_code_pk, is_waiting) VALUES ('${studentFirstName}', '${studentLastName}', now(), null, '${roomCode}', 1);`, function (err, result, fields) {
             if (err) {
