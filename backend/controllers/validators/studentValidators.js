@@ -4,7 +4,7 @@ export const joinWaitingRoomSchema = yup
     .object({
         student_first_name: yup.string().trim().required(),
         student_last_name: yup.string().trim().required(),
-        room_ID: yup.string().trim().required()
+        room_code: yup.string().trim().required()
     })
     .required();
 

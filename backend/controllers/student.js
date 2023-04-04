@@ -7,9 +7,10 @@ import { joinWaitingRoomSchema, leaveWaitingRoomSchema } from './validators/stud
     */
 export const joinWaitingRoom = async (req, res) => {
     const { body } = req;
+
     try {
         const data = joinWaitingRoomSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
-
+        
         let studentFirstName = data['student_first_name']
         let studentLastName = data['student_last_name']
         let roomCode = data['room_code']
