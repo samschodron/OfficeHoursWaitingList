@@ -85,22 +85,24 @@ body {
 }
 
 .join-header {
+    position: absolute;
     color: white;
     text-align: left;
-    transform: translate(9%,17rem);
-
+    transform: translate(50%,15rem);
 }
 
 .join-graphic {
+    position: absolute;
     width: 50%;
-    transform: translate(0,40%);
+    transform: translate(-100%,25%);
 }
 
 .join-logo {
     position: absolute;
-    width: 10rem;
-    text-align: right;
-    transform: translate(160%, -25%);
+    overflow: hidden;
+    width: 30rem;
+    text-align: center;
+    transform: translate(15%,-20%);
 }
 
 .waiting-list-view {

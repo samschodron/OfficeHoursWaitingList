@@ -9,9 +9,7 @@ const JoinPage = () => {
             <img src={joinGraphic} alt="Computer graphic" className="join-graphic" />
             <rect className="background-rect">
                 <img src={smLogo} alt="Small logo" className="join-logo" />
-                <Typography className="join-header" variant="h5" component="h5" style={{fontWeight: ''}} gutterBottom>
-                    Join a Room
-                </Typography>
+                <Typography className="join-header" variant="h5" component="h5" gutterBottom>Join a Room</Typography>
                 <div className="textFieldW" style={{marginRight: '1rem'}}>
                     <TextField
                         label="First Name"
