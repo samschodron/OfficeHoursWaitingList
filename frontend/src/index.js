@@ -34,7 +34,7 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                        borderColor: '#7300ff', // Change this to the desired focus color for the outline
+                        borderColor: '#7300ff',
                     },
                 },
             },
@@ -43,7 +43,7 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     '&.Mui-focused': {
-                        color: '#7300ff', // Change this to the desired focus color for the label
+                        color: '#7300ff',
                     },
                 },
             },

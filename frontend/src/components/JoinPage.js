@@ -1,16 +1,20 @@
 import React from 'react';
 import {Box, Button, TextField, Typography} from '@mui/material';
+import joinGraphic from '../images/join_graphic.jpg';
+import smLogo from '../images/AOWL_SM.png';
 
 const JoinPage = () => {
     return (
         <Box>
+            <img src={joinGraphic} alt="Computer graphic" className="join-graphic" />
             <rect className="background-rect">
-                <Typography className="join-header" variant="h1" component="h1" style={{fontWeight: 'bold'}} gutterBottom>
+                <img src={smLogo} alt="Small logo" className="join-logo" />
+                <Typography className="join-header" variant="h5" component="h5" style={{fontWeight: ''}} gutterBottom>
                     Join a Room
                 </Typography>
-                <div className="textFieldW">
+                <div className="textFieldW" style={{marginRight: '1rem'}}>
                     <TextField
-                        label="Name"
+                        label="First Name"
                         variant="outlined"
                         fullWidth
                         sx={{
@@ -18,7 +22,10 @@ const JoinPage = () => {
                                 borderRadius: '15px',
                             },
                             '& .MuiInputLabel-shrink': {
-                                transform: 'translate(35%, .3%) scale(0.75)',
+                                transform: 'translate(15%, .3%) scale(0.75)',
+                            },
+                            '& .MuiOutlinedInput-input': {
+                                paddingLeft: '4%', // Adjust this value to move the input lower in the TextField
                             },
                         }}
                         InputProps={{
@@ -26,7 +33,28 @@ const JoinPage = () => {
                         }}
                     />
                 </div>
-                <div className="textFieldW" style={{marginLeft: '2rem'}}>
+                <div className="textFieldW" style={{marginLeft: '1rem'}}>
+                    <TextField
+                        label="Last Name"
+                        variant="outlined"
+                        fullWidth
+                        sx={{
+                            '& .MuiOutlinedInput-root': {
+                                borderRadius: '15px',
+                            },
+                            '& .MuiInputLabel-shrink': {
+                                transform: 'translate(15%, .3%) scale(0.75)',
+                            },
+                            '& .MuiOutlinedInput-input': {
+                                paddingLeft: '4%', // Adjust this value to move the input lower in the TextField
+                            },
+                        }}
+                        InputProps={{
+                            notched: false,
+                        }}
+                    />
+                </div>
+                <div className="textFieldW" style={{marginTop: '1rem', width:'85%'}}>
                         <TextField
                             label="Room Code"
                             variant="outlined"
@@ -39,7 +67,7 @@ const JoinPage = () => {
                                     transform: 'translate(20%, .3%) scale(0.75)',
                                 },
                                 '& .MuiOutlinedInput-input': {
-                                    paddingLeft: '5.5%', // Adjust this value to move the input lower in the TextField
+                                    paddingLeft: '3%', // Adjust this value to move the input lower in the TextField
                                 },
                             }}
                             InputProps={{
