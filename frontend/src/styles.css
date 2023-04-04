@@ -105,6 +105,13 @@ body {
     transform: translate(15%,-20%);
 }
 
+.create-header {
+    position: absolute;
+    color: white;
+    text-align: left;
+    transform: translate(25%,15rem);
+}
+
 .waiting-list-view {
     display: flex;
     flex-direction: column;

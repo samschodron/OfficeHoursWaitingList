@@ -53,7 +53,7 @@ const CreateListPage = () => {
     return (
         <Box>
             <rect className="background-rect">
-                <Typography className="join-header" variant="h1" component="h1" style={{ fontWeight: 'bold' }} gutterBottom>
+                <Typography className="create-header" variant="h5" component="h5" gutterBottom>
                     Create a List
                 </Typography>
                 <div className="textFieldW" style={{ marginLeft: '2rem', marginBottom: '2rem', width: '60%' }}>
