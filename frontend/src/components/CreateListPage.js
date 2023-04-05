@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import createGraphic from '../images/create-graphic.jpg';
+import smLogo from '../images/AOWL_SM.png';
 
 const CreateListPage = () => {
     const navigate = useNavigate();
@@ -52,33 +54,12 @@ const CreateListPage = () => {
 
     return (
         <Box>
+            <img src={createGraphic} alt="Computer graphic" className="create-graphic"/>
             <rect className="background-rect">
+                <img src={smLogo} alt="Small logo" className="create-logo"/>
                 <Typography className="create-header" variant="h5" component="h5" gutterBottom>
                     Create a List
                 </Typography>
-                <div className="textFieldW" style={{ marginLeft: '2rem', marginBottom: '2rem', width: '60%' }}>
-                    <TextField
-                        name="roomName"
-                        label="Room Name"
-                        variant="outlined"
-                        fullWidth
-                        sx={{
-                            '& .MuiOutlinedInput-root': {
-                                borderRadius: '15px',
-                            },
-                            '& .MuiInputLabel-shrink': {
-                                transform: 'translate(20%, .3%) scale(0.75)',
-                            },
-                            '& .MuiOutlinedInput-input': {
-                                paddingLeft: '5.5%', // Adjust this value to move the input lower in the TextField
-                            },
-                        }}
-                        InputProps={{
-                            notched: false,
-                        }}
-                        onChange={handleFormInputChange}
-                    />
-                </div>
                 <div className="textFieldW" style={{ marginLeft: '2rem' }}>
                     <TextField
                         name="firstName"
@@ -119,12 +100,35 @@ const CreateListPage = () => {
                         onChange={handleFormInputChange}
                     />
                 </div>
+                <div className="textFieldW" style={{ marginLeft: '2rem', marginTop: '2rem', width: '85%' }}>
+                    <TextField
+                        name="roomName"
+                        label="Room Name"
+                        variant="outlined"
+                        fullWidth
+                        sx={{
+                            '& .MuiOutlinedInput-root': {
+                                borderRadius: '15px',
+                            },
+                            '& .MuiInputLabel-shrink': {
+                                transform: 'translate(20%, .3%) scale(0.75)',
+                            },
+                            '& .MuiOutlinedInput-input': {
+                                paddingLeft: '5.5%', // Adjust this value to move the input lower in the TextField
+                            },
+                        }}
+                        InputProps={{
+                            notched: false,
+                        }}
+                        onChange={handleFormInputChange}
+                    />
+                </div>
                 <Box onClick={formIsValid} className="button-join">
                     <Button variant="contained" className="shadow" sx={{
                         color: 'white', borderRadius: '30px', minWidth: '35%',
                         minHeight: '3rem', background: '#000000', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
                     }}>
-                        Join
+                        Create
                     </Button>
                 </Box>
             </rect >

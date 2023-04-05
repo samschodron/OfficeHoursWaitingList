@@ -81,7 +81,7 @@ const JoinPage = () => {
                         onChange={handleFormInputChange}
                     />
                 </div>
-                <div className="textFieldW">
+                <div className="textFieldW" style={{marginLeft: '1rem'}}>
                     <TextField
                         name="lastName"
                         label="Last Name"
@@ -93,34 +93,16 @@ const JoinPage = () => {
                                 borderRadius: '15px',
                             },
                             '& .MuiInputLabel-shrink': {
-                                transform: 'translate(35%, .3%) scale(0.75)',
+                                transform: 'translate(15%, .3%) scale(0.75)',
+                            },
+                            '& .MuiOutlinedInput-input': {
+                            paddingLeft: '4%', // Adjust this value to move the input lower in the TextField
                             },
                         }}
                         InputProps={{
                             notched: false,
                         }}
                         onChange={handleFormInputChange}
-                    />
-                </div>
-                <div className="textFieldW" style={{marginLeft: '1rem'}}>
-                    <TextField
-                        label="Last Name"
-                        variant="outlined"
-                        fullWidth
-                        sx={{
-                            '& .MuiOutlinedInput-root': {
-                                borderRadius: '15px',
-                            },
-                            '& .MuiInputLabel-shrink': {
-                                transform: 'translate(15%, .3%) scale(0.75)',
-                            },
-                            '& .MuiOutlinedInput-input': {
-                                paddingLeft: '4%', // Adjust this value to move the input lower in the TextField
-                            },
-                        }}
-                        InputProps={{
-                            notched: false,
-                        }}
                     />
                 </div>
                 <div className="textFieldW" style={{marginTop: '1rem', width:'85%'}}>

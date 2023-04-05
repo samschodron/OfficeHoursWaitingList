@@ -105,6 +105,20 @@ body {
     transform: translate(15%,-20%);
 }
 
+.create-logo {
+    position: absolute;
+    overflow: hidden;
+    width: 30rem;
+    text-align: center;
+    transform: translate(23%,-20%);
+}
+
+.create-graphic {
+    position: absolute;
+    width: 50%;
+    transform: translate(100%,25%);
+}
+
 .create-header {
     position: absolute;
     color: white;

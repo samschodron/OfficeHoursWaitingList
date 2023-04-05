@@ -32,7 +32,7 @@ const HomePage = () => {
                                 Join A List
                             </Button>
                         </Link>
-                        <Link to="/create-list-page" className="shadow" style={{ textDecoration: 'none' }}>
+                        <Link to="/create-list-page" className="" style={{ textDecoration: 'none' }}>
                             <Button color="buttWhite" variant="contained" className="shadow" sx={{ marginLeft: '2rem', borderRadius: '30px', minWidth: '35%', height: '3rem' }}>
                                 Create A List
                             </Button>
