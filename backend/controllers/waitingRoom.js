@@ -2,11 +2,8 @@ import db from '../dbconfig.js'
 import crypto from 'crypto'
 import { createWaitingRoomSchema } from './validators/waitingRoomValidator.js'
 
-function generateUniqueRoomCode(size = 15) {
-    return crypto
-        .randomBytes(size)
-        .toString('base64')
-        .slice(0, size)
+function generateUniqueRoomCode(size = 12) {
+    return crypto.randomBytes(size).toString('hex');
 }
 
 export const createWaitingRoom = async (req, res) => {

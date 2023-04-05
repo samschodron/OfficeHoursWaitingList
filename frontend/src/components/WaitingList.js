@@ -37,7 +37,7 @@ const WaitingList = () => {
 
         const interval = setInterval(() => {
             updateList();
-        }, 30000);
+        }, 2000);
 
         return () => clearInterval(interval);
     }, [roomCode, studentList]);
