@@ -71,7 +71,7 @@ const CreateListPage = () => {
                                 borderRadius: '15px',
                             },
                             '& .MuiInputLabel-shrink': {
-                                transform: 'translate(35%, .3%) scale(0.75)',
+                                transform: 'translate(15%, .3%) scale(0.75)',
                             },
                         }}
                         InputProps={{
@@ -91,7 +91,7 @@ const CreateListPage = () => {
                                 borderRadius: '15px',
                             },
                             '& .MuiInputLabel-shrink': {
-                                transform: 'translate(35%, .3%) scale(0.75)',
+                                transform: 'translate(15%, .3%) scale(0.75)',
                             },
                         }}
                         InputProps={{
@@ -114,7 +114,7 @@ const CreateListPage = () => {
                                 transform: 'translate(20%, .3%) scale(0.75)',
                             },
                             '& .MuiOutlinedInput-input': {
-                                paddingLeft: '5.5%', // Adjust this value to move the input lower in the TextField
+                                paddingLeft: '3%', // Adjust this value to move the input lower in the TextField
                             },
                         }}
                         InputProps={{
