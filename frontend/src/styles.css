@@ -138,3 +138,44 @@ body {
 .waiting-list-item {
     align-items: center;
 }
+
+.waiting-room-name {
+    text-align: center;
+    transform: translate(40rem);
+}
+.waiting-room-ta {
+    text-align: right;
+    transform: translate(66rem);
+    font-weight: bolder;
+}
+
+.header-logo {
+    position: absolute;
+    max-width: 250%;
+    max-height: 250%;
+    transform: translate(0%, 3%);
+}
+
+.room-code-container {
+    position: fixed;
+    bottom: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.room-code {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: #7b50f2;
+    color: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.room-code:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}

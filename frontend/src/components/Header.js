@@ -1,17 +1,15 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import logo from "../images/AOWL.png";
 
-const Header = () => {
+
+const Header = (roomName, taFirst, taLast) => {
     return (
         <AppBar position="static">
             <Toolbar>
-                <IconButton edge="start" color="inherit" aria-label="menu">
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6">
-                    My Web App
-                </Typography>
+                <img src={logo} alt="Logo" className="header-logo" />
+                <h1 className="Waiting-room-name">Room name: {roomName}</h1>
             </Toolbar>
         </AppBar>
     );
