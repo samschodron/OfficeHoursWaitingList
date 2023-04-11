@@ -43,7 +43,7 @@ export const getAllStudentsInWaitingRoom = async (req, res) => {
             return res.status(422).json({ errors: 'roomCode query param is required' });
         }
         const roomCode = queryParams.roomCode
-        let sqlQuery = `SELECT student_first_name, student_last_name, time_entered FROM student WHERE is_waiting = 1 AND room_code_pk = "${roomCode}" ORDER BY time_entered;`
+        let sqlQuery = `SELECT studentID_pk, student_first_name, student_last_name, time_entered FROM student WHERE is_waiting = 1 AND room_code_pk = "${roomCode}" ORDER BY time_entered;`
 
         db.query(sqlQuery, function (error, result, fields) {
             if (error) {
