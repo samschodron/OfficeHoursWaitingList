@@ -15,26 +15,34 @@ export const joinWaitingRoom = async (req, res) => {
         let studentLastName = data['student_last_name']
         let roomCode = data['room_code']
 
-        db.query(`INSERT INTO student (student_first_name, student_last_name, time_entered, time_left, room_code_pk, is_waiting) VALUES ('${studentFirstName}', '${studentLastName}', now(), null, '${roomCode}', 1);`, function (err, result, fields) {
+        db.query(`SELECT * FROM teaching_assistant WHERE room_code_pk= "${roomCode}"`, function(err, row) {
             if (err) {
-                res.status(400).json({ message: 'failed to join a waiting room' })
+                res.status(400).json({ message: 'Room doesn\'t exist!' })
                 throw err;
             }
-            console.log(result);
-        })
+            else {
+                db.query(`INSERT INTO student (student_first_name, student_last_name, time_entered, time_left, room_code_pk, is_waiting) VALUES ('${studentFirstName}', '${studentLastName}', now(), null, '${roomCode}', 1);`, function (err, result, fields) {
+                    if (err) {
+                        res.status(400).json({ message: 'failed to join a waiting room' })
+                        throw err;
+                    }
+                    console.log(result);
+                })
 
-        db.query(`SELECT LAST_INSERT_ID();`, function (err, result, fields) {
-            if (err) {
-                res.status(400).json({ message: 'failed to join a waiting room' })
-                throw err;
+                db.query(`SELECT LAST_INSERT_ID();`, function (err, result, fields) {
+                    if (err) {
+                        res.status(400).json({ message: 'failed to join a waiting room' })
+                        throw err;
+                    }
+                    console.log(result);
+                })
+
+                return res.json({
+                    message: "result",
+                    data,
+                    room_code: roomCode
+                });
             }
-            console.log(result);
-        })
-
-        return res.json({
-            message: "result",
-            data,
-            room_code: roomCode
         });
     } catch (error) {
         return res.status(422).json({ errors: error.errors });
@@ -57,7 +65,7 @@ export const leaveWaitingRoom = async (req, res) => {
 
             // If student exists in database, remove from wait list
             if (err) {
-                res.status(400).json({ message: 'student doesn\'t exist!' })
+                res.status(400).json({ message: 'Student doesn\'t exist!' })
                 throw err;
             }
             else {
