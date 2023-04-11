@@ -24,17 +24,17 @@ const HomePage = () => {
                     </Typography>
 
                     <Box className="button-home">
-                        <Link to="/join-page" className="shadow" style={{ textDecoration: 'none' }}>
+                        <Link to="/login" className="shadow" style={{ textDecoration: 'none' }}>
                             <Button variant="contained" className="shadow" sx={{
                                 borderRadius: '30px', minWidth: '35%',
                                 minHeight: '3rem', background: 'linear-gradient(to right, #BE50F2, #3888FF)', '&:hover': { opacity: 0.5, transition: '.2s' }
                             }}>
-                                Join A List
+                                Login
                             </Button>
                         </Link>
-                        <Link to="/create-list-page" className="" style={{ textDecoration: 'none' }}>
+                        <Link to="/signup" className="" style={{ textDecoration: 'none' }}>
                             <Button color="buttWhite" variant="contained" className="shadow" sx={{ marginLeft: '2rem', borderRadius: '30px', minWidth: '35%', height: '3rem' }}>
-                                Create A List
+                                Signup
                             </Button>
                         </Link>
                     </Box>
