@@ -13,3 +13,11 @@ export const leaveWaitingRoomSchema = yup
         studentID_pk: yup.string().trim().required()
     })
     .required();
+
+    export const findStudentSchema = yup
+    .object({
+        studentID_pk: yup.string().trim().required(),
+        room_code_pk: yup.string().trim().required(),
+        //is_waiting: yup.number().required()
+    })
+    .required();
