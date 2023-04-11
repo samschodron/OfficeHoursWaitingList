@@ -3,6 +3,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { signOut } from "firebase/auth";
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import { Container, Typography, Box, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
 
@@ -37,9 +39,20 @@ const Dashboard = () => {
             <h1>Dashboard</h1>
 
             <div>
-                <button onClick={handleLogout}>
+                <Link to="/join-page" className="shadow" style={{ textDecoration: 'none' }}>
+                    <Button>
+                        Join A List
+                    </Button>
+                </Link>
+                <Link to="/create-list-page" className="" style={{ textDecoration: 'none' }}>
+                    <Button>
+                        Create A List
+                    </Button>
+                </Link>
+
+                <Button onClick={handleLogout}>
                     Logout
-                </button>
+                </Button>
             </div>
         </div>
     )
