@@ -4,6 +4,8 @@ import HomePage from './components/HomePage';
 import JoinPage from './components/JoinPage';
 import WaitingList from './components/WaitingList';
 import CreateListPage from './components/CreateListPage';
+import LoginPage from './components/LoginPage';
+import SignupPage from './components/SignupPage';
 import './App.css';
 import './styles.css';
 
@@ -38,6 +40,8 @@ const App = () => (
             <Route path="/join-page" element={<JP />} />
             <Route path="/create-list-page" element={<CreateListPage />} />
             <Route path="/waiting-list" element={<WaitingList />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
         </Routes>
     </div>
 );
