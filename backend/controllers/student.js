@@ -48,11 +48,12 @@ export const joinWaitingRoom = async (req, res) => {
 export const leaveWaitingRoom = async (req, res) => {
     const { body } = req;
     try {
-        let time = Date.now();
+        const data = leaveWaitingRoomSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
+
         let id = data['studentID_pk']
 
         // Searches db to see if student is in the waiting list 
-        db.query(`SELECT * FROM student WHERE studentID_pk= ${id} AND isWaiting = 1`, function(err, row) {
+       db.query(`SELECT * FROM student WHERE studentID_pk= ${id} AND is_waiting = 1`, function(err, row) {
 
             // If student exists in database, remove from wait list
             if (err) {
@@ -61,7 +62,7 @@ export const leaveWaitingRoom = async (req, res) => {
             }
             else {
                 if (row && row.length ) {
-                    db.query(`UPDATE room_visitors SET time_left = ${time}, is_waiting = 1 WHERE visitor ID = ${id}`, function (err, result, fields) {
+                    db.query(`UPDATE student SET time_left = now(), is_waiting = 0 WHERE studentID_pk = ${id}`, function (err, result, fields) {
                         if (err) throw err;
                         console.log('Successfully removed from wait list.');
                     })
@@ -71,6 +72,7 @@ export const leaveWaitingRoom = async (req, res) => {
             }
 
         });
+
     } catch (error) {
         return res.status(422).json({ errors: error.errors });
     }

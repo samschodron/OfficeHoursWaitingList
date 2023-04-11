@@ -10,7 +10,6 @@ export const joinWaitingRoomSchema = yup
 
 export const leaveWaitingRoomSchema = yup
     .object({
-        teaching_assistant_first_name: yup.string().trim().required(),
-        teaching_assistant_last_name: yup.string().trim().required()
+        studentID_pk: yup.string().trim().required()
     })
     .required();
