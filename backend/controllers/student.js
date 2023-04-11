@@ -39,7 +39,7 @@ export const joinWaitingRoom = async (req, res) => {
                     })
                 } else {
                     console.log('List does not exist!');
-                    return res.status(403);
+                    return res.status(403).json({ message: "List does not exist!"});
                 }
             }
         });
@@ -75,7 +75,7 @@ export const leaveWaitingRoom = async (req, res) => {
                     })
                 } else {
                     console.log('Student was not found in list!');
-                    return res.status(403);
+                    return res.status(403).json({ message: "Student was not found in list!"});;
                 }
             }
 
