@@ -85,3 +85,47 @@ export const leaveWaitingRoom = async (req, res) => {
         return res.status(422).json({ errors: error.errors });
     }
 }
+
+/* Function to find the position of a student currently in a waitlist
+     * @return  The current position of the student in the waiting list
+     */
+export const studentFind = async(req, res) =>{
+    const {body} = req;
+    
+    try{
+        const data = studentFindSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
+        let id = data['studentID_pk']
+        let roomCode = data['room_code_pk']
+        //let isWaiting = data['is_waiting']
+        let sqlQuery = `SELECT studentID_pk FROM student WHERE room_code_pk = ${roomCode} AND is_waiting = 1 ORDER BY time_entered ASC`
+    // check if student ID is not null before trying to find the student
+    if(id != null)
+    {
+        // TODO counts the number of records before it finds the one it is looking for
+        // TODO returns how many positions there were before finding the record it is looking for
+        // inner joins on teaching assistant with the similarity being the room codes
+        // another possibility is to try and use the count function
+        // TODO iterate through returned list and test it
+        // return a json and go through it to find matching student ID
+        db.query(sqlQuery, function(err,result,fields){
+            // throws error if something goes wrong
+            if(err){
+                res.status(400).json({ message: 'Student doesn\'t exist!' })
+                throw err;
+            }
+            // prints result of the query
+            
+            console.log(result);
+
+        })
+    }
+    // prints error message if the student is not in the database
+    else {
+        res.status(400).json({ message: 'Student doesn\'t exist!' })
+        throw err;
+    }
+}
+catch (error) {
+    return res.status(422).json({ errors: error.errors });
+}
+}
