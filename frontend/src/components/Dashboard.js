@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { onAuthStateChanged } from "firebase/auth";
 import { signOut } from "firebase/auth";
 import { auth } from '../firebase';
@@ -37,6 +37,8 @@ const Dashboard = () => {
     return (
         <div>
             <h1>Dashboard</h1>
+            <h1>You are currenly signed in as: </h1>
+            {auth.currentUser ? <h1>Email: {auth.currentUser.email}</h1> : <h1>Not signed in</h1>}
 
             <div>
                 <Link to="/join-page" className="shadow" style={{ textDecoration: 'none' }}>

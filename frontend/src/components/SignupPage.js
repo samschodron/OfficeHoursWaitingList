@@ -7,12 +7,18 @@ const SignupPage = () => {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('');
+    const [password1, setPassword1] = useState('');
+    const [password2, setPassword2] = useState('');
+    const [error, setError] = useState('')
 
     const onSubmit = async (e) => {
         e.preventDefault()
 
-        await createUserWithEmailAndPassword(auth, email, password)
+        if (password1 !== password2) {
+            setError('Error: Passwords do not match')
+            return
+        }
+        await createUserWithEmailAndPassword(auth, email, password1)
             .then((userCredential) => {
                 // created successfully
                 const user = userCredential.user;
@@ -46,19 +52,33 @@ const SignupPage = () => {
                 </div>
 
                 <div>
-                    <label htmlFor="password">
+                    <label htmlFor="password1">
                         Password
                     </label>
                     <input
                         type="password"
                         label="Create password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={password1}
+                        onChange={(e) => setPassword1(e.target.value)}
                         required
                         placeholder="Password"
                     />
                 </div>
+                <div>
+                    <label htmlFor="password2">
+                        Confirm Password
+                    </label>
+                    <input
+                        type="password"
+                        label="Confirm password"
+                        value={password2}
+                        onChange={(e) => setPassword2(e.target.value)}
+                        required
+                        placeholder="Confirm Password"
+                    />
+                </div>
 
+                {error && <p>{error}</p>}
                 <button
                     type="submit"
                     onClick={onSubmit}
