@@ -24,7 +24,6 @@ const JoinPage = () => {
     const joinWaitingListApi = async () => {
         const user = auth.currentUser;
         const token = user && (await user.getIdToken());
-        console.log('join waiting list - token: ', token)
 
         let url = `http://localhost:4000/student/joinWaitingRoom`
         let response = await fetch(url, {

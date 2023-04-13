@@ -2,13 +2,14 @@ import db from '../dbconfig.js'
 import crypto from 'crypto'
 import { createWaitingRoomSchema } from './validators/waitingRoomValidator.js'
 import { destroyWaitingRoomSchema } from './validators/waitingRoomValidator.js'
-function generateUniqueRoomCode(size = 12) {
+function generateUniqueRoomCode(size = 4) {
     return crypto.randomBytes(size).toString('hex');
 }
 
 export const createWaitingRoom = async (req, res) => {
     const { body } = req;
-    console.log('create waiting room uid: ', req.app.locals.uid)
+    const user_id = req.app.locals.uid
+
     try {
         const data = createWaitingRoomSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
         let teachingAssistantFirstName = data['teaching_assistant_first_name']
@@ -17,7 +18,7 @@ export const createWaitingRoom = async (req, res) => {
 
         let roomCode = generateUniqueRoomCode()
 
-        let sqlQuery = `INSERT INTO teaching_assistant (room_code_pk, teaching_assistant_first_name, teaching_assistant_last_name, time_created, waiting_room_name) VALUES ("${roomCode}", "${teachingAssistantFirstName}", "${teachingAssistantlastName}", now(), "${waitingRoomName}")`;
+        let sqlQuery = `INSERT INTO teaching_assistant (room_code_pk, teaching_assistant_first_name, teaching_assistant_last_name, time_created, waiting_room_name, user_id) VALUES ("${roomCode}", "${teachingAssistantFirstName}", "${teachingAssistantlastName}", now(), "${waitingRoomName}", "${user_id}")`;
 
         db.query(sqlQuery, function (error, result, fields) {
             if (error) {
@@ -39,7 +40,8 @@ export const createWaitingRoom = async (req, res) => {
 
 export const getAllStudentsInWaitingRoom = async (req, res) => {
     const queryParams = req.query
-    console.log('get all students in waiting room uid: ', req.app.locals.uid)
+    const user_id = req.app.locals.uid
+
     try {
         if (!queryParams.roomCode) {
             return res.status(422).json({ errors: 'roomCode query param is required' });

@@ -48,10 +48,8 @@ const WaitingList = () => {
     const [studentList, setStudentList] = useState([])
 
     const updateList = async () => {
-
         const user = auth.currentUser;
         const token = user && (await user.getIdToken());
-        console.log('getting all students in waiting list - token: ', token)
 
         if (roomCode) {
             let url = `http://localhost:4000/waitingRoom/getAllStudentsInWaitingRoom/?roomCode=${roomCode}`
@@ -74,7 +72,6 @@ const WaitingList = () => {
     const removeStudent = async (studentID) => {
         const user = auth.currentUser;
         const token = user && (await user.getIdToken());
-        console.log('remove student - token: ', token)
 
         console.log(studentID);
         let url = `http://localhost:4000/student/leaveWaitingRoom`

@@ -7,7 +7,8 @@ import { joinWaitingRoomSchema, leaveWaitingRoomSchema, findStudentSchema } from
     */
 export const joinWaitingRoom = async (req, res) => {
     const { body } = req;
-    console.log('join waiting room uid: ', req.app.locals.uid)
+    const user_id = req.app.locals.uid
+
     try {
         const data = joinWaitingRoomSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
 
@@ -22,7 +23,7 @@ export const joinWaitingRoom = async (req, res) => {
             }
             else {
                 if (row && row.length) {
-                    db.query(`INSERT INTO student (student_first_name, student_last_name, time_entered, time_left, room_code_pk, is_waiting) VALUES ('${studentFirstName}', '${studentLastName}', now(), null, '${roomCode}', 1);`, function (err, result, fields) {
+                    db.query(`INSERT INTO student (student_first_name, student_last_name, time_entered, time_left, room_code_pk, is_waiting, user_id) VALUES ('${studentFirstName}', '${studentLastName}', now(), null, '${roomCode}', 1, '${user_id}');`, function (err, result, fields) {
                         if (err) {
                             res.status(400).json({ message: 'failed to join a waiting room' })
                             throw err;
@@ -54,7 +55,7 @@ export const joinWaitingRoom = async (req, res) => {
     */
 export const leaveWaitingRoom = async (req, res) => {
     const { body } = req;
-    console.log('leave room uid: ', req.app.locals.uid)
+
     try {
         const data = leaveWaitingRoomSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
 
