@@ -54,6 +54,7 @@ export const joinWaitingRoom = async (req, res) => {
     */
 export const leaveWaitingRoom = async (req, res) => {
     const { body } = req;
+    console.log('leave room uid: ', req.app.locals.uid)
     try {
         const data = leaveWaitingRoomSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
 

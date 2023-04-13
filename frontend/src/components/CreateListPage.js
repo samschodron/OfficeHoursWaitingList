@@ -26,7 +26,6 @@ const CreateListPage = () => {
     const createWaitingListApi = async () => {
         const user = auth.currentUser;
         const token = user && (await user.getIdToken());
-        console.log('create waiting list - token: ', token)
 
         let url = `http://localhost:4000/waitingRoom/createWaitingRoom`
         let response = await fetch(url, {

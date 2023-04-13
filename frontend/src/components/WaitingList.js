@@ -72,19 +72,24 @@ const WaitingList = () => {
 
 
     const removeStudent = async (studentID) => {
+        const user = auth.currentUser;
+        const token = user && (await user.getIdToken());
+        console.log('remove student - token: ', token)
+
         console.log(studentID);
         let url = `http://localhost:4000/student/leaveWaitingRoom`
         let response = await fetch(url, {
             method: "POST",
             headers: {
-                'Content-type': "application/json"
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
                 studentID_pk: studentID
             }),
         })
         console.log(response)
-    }   
+    }
 
     useEffect(() => {
         updateList()

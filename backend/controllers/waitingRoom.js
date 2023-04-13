@@ -7,9 +7,7 @@ function generateUniqueRoomCode(size = 12) {
 }
 
 export const createWaitingRoom = async (req, res) => {
-    const { body, headers } = req;
-    // console.log('create waiting room: body - ', body)
-    // console.log('create waiting room: auth - ', headers['authorization'])
+    const { body } = req;
     console.log('create waiting room uid: ', req.app.locals.uid)
     try {
         const data = createWaitingRoomSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
