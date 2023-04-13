@@ -33,9 +33,9 @@ const JoinPage = () => {
                 Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
-                student_first_name: formInput["firstName"],
-                student_last_name: formInput["lastName"],
-                room_code: formInput["roomCode"]
+                student_first_name: formInput["firstName"].trim(),
+                student_last_name: formInput["lastName"].trim(),
+                room_code: formInput["roomCode"].trim()
             }),
         })
         let jsonResponse = await response.json()
@@ -49,12 +49,20 @@ const JoinPage = () => {
             if (isEmpty(formInput[property]) && property !== "studentID") {
                 return false;
             }
+            if(hasWhiteSpace(formInput[property].trim())) {
+                console.log("hit");
+                return false;
+            }
         }
         // const studentID = await joinWaitingListApi()
-        await joinWaitingListApi()
-        navigate('/join-list', { state: { formInput: formInput/*, studentID: studentID*/ } });
+        console.log("hit2");
+        navigate('/dashboard', { state: { formInput: formInput/*, studentID: studentID*/ } });
         return true;
     }
+
+    const hasWhiteSpace = (s) => {
+        return /\s/g.test(s);
+    };
 
     return (
         <Box>
