@@ -17,6 +17,7 @@ app.use(cors())
 app.use('/waitingRoom/createWaitingRoom', VerifyToken)
 app.use('/waitingRoom/getAllStudentsInWaitingRoom', VerifyToken)
 app.use('/student/joinWaitingRoom', VerifyToken)
+app.use('/student/leaveWaitingRoom', VerifyToken)
 
 app.use('/waitingRoom', waitingRoomRoutes)
 app.use('/student', studentRoutes)
