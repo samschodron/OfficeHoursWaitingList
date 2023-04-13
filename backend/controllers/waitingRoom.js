@@ -7,7 +7,10 @@ function generateUniqueRoomCode(size = 12) {
 }
 
 export const createWaitingRoom = async (req, res) => {
-    const { body } = req;
+    const { body, headers } = req;
+    console.log('create waiting room: body - ', body)
+    console.log('create waiting room: auth - ', headers['authorization'])
+    console.log('create waiting room uid: ', req.app.locals.uid)
     try {
         const data = createWaitingRoomSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
         let teachingAssistantFirstName = data['teaching_assistant_first_name']
@@ -62,10 +65,10 @@ export const getAllStudentsInWaitingRoom = async (req, res) => {
     }
 }
 
-export const destroyWaitingRoom = async(req,res) => {
+export const destroyWaitingRoom = async (req, res) => {
     const { body } = req;
-    try{
-    const data = destroyWaitingRoomSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
+    try {
+        const data = destroyWaitingRoomSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
         // check to see if this is how you should do it
         let roomCode = data['room_code_pk']
         //let waitingRoomName = data['waiting_room_name']
@@ -73,12 +76,12 @@ export const destroyWaitingRoom = async(req,res) => {
 
         let sqlQuery = `UPDATE teaching_assistant SET time_destroyed = now() WHERE room_code_pk = "${roomCode}"`;
         //let sqlQuerydel = `DELETE FROM teaching_assistant WHERE room_code_pk = ${roomCode}`
-        db.query(sqlQuery, function(error,rseult,fields){
+        db.query(sqlQuery, function (error, rseult, fields) {
             if (error) {
                 res.status(400).json({ message: 'failed to delete a waiting room' })
                 throw error;
             }
-            else{
+            else {
                 return res.json({
                     message: 'successfully deleted waiting room',
                     data
@@ -86,8 +89,8 @@ export const destroyWaitingRoom = async(req,res) => {
                 });
             }
         });
-}
-catch{
-    return res.status(422).json({ errors: error.errors });
-}
+    }
+    catch {
+        return res.status(422).json({ errors: error.errors });
+    }
 }

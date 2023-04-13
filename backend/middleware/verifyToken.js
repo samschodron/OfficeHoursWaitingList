@@ -1,7 +1,10 @@
 import auth from "../firebase/config/firebase-config.js";
 
 export const VerifyToken = async (req, res, next) => {
-    console.log(req.header("Authorization"))
+    const { body, headers } = req;
+    console.log('req url: ', req.url)
+    console.log('verify token: body - ', body)
+    console.log('verify token: auth - ', headers['authorization'])
     const token = req.headers.authorization.split(" ")[1];
     try {
         const decodedToken = await auth.verifyIdToken(token);

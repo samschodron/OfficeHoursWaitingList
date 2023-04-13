@@ -2,6 +2,7 @@ import waitingRoomRoutes from './routes/waitingRoom.js'
 import studentRoutes from './routes/student.js'
 import bodyParser from "body-parser";
 import cors from "cors";
+import { VerifyToken } from "./middleware/verifyToken.js"
 
 import express from 'express'
 const app = express()
@@ -12,6 +13,8 @@ app.use(bodyParser.json())
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
+
+app.use('/waitingRoom/createWaitingRoom', VerifyToken)
 
 app.use('/waitingRoom', waitingRoomRoutes)
 app.use('/student', studentRoutes)
