@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 
 app.use('/waitingRoom/createWaitingRoom', VerifyToken)
+app.use('/waitingRoom/getAllStudentsInWaitingRoom', VerifyToken)
 
 app.use('/waitingRoom', waitingRoomRoutes)
 app.use('/student', studentRoutes)

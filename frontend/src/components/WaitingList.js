@@ -15,10 +15,11 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { useNavigate } from 'react-router-dom';
-import {makeStyles} from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Header from "./Header";
 import logo from "../images/AOWL.png";
+import { auth } from "../firebase"
 
 const useStyles = makeStyles({
     container: {
@@ -46,14 +47,20 @@ const WaitingList = () => {
 
     const [studentList, setStudentList] = useState([])
 
-    const updateList = () => {
+    const updateList = async () => {
+
+        const user = auth.currentUser;
+        const token = user && (await user.getIdToken());
+        console.log('getting all students in waiting list - token: ', token)
+
         if (roomCode) {
             let url = `http://localhost:4000/waitingRoom/getAllStudentsInWaitingRoom/?roomCode=${roomCode}`
             fetch(url, {
                 method: "GET",
                 headers: {
-                    'Content-type': "application/json"
-                }
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
             })
                 .then(res => res.json())
                 .then(data => {
@@ -78,17 +85,17 @@ const WaitingList = () => {
             <AppBar position="static">
                 <Toolbar>
                     <img src={logo} alt="Logo" className="header-logo" />
-                    <Typography variant="h4" component="h4" className="waiting-room-name" style={{fontWeight: 'bold'}}>
+                    <Typography variant="h4" component="h4" className="waiting-room-name" style={{ fontWeight: 'bold' }}>
                         {roomName}
                     </Typography>
-                    <Typography variant="h4" component="h4" className="waiting-room-ta" style={{fontWeight: 'bold'}}>
+                    <Typography variant="h4" component="h4" className="waiting-room-ta" style={{ fontWeight: 'bold' }}>
                         TA: {firstName} {lastName}
                     </Typography>
                 </Toolbar>
             </AppBar>
 
             <div className={classes.container}>
-                <Typography variant="h4" className={classes.title} style={{color: 'black', fontWeight: 'bold'}}>
+                <Typography variant="h4" className={classes.title} style={{ color: 'black', fontWeight: 'bold' }}>
                     Waiting List
                 </Typography>
                 <List>

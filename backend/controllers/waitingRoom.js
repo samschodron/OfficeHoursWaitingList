@@ -8,8 +8,8 @@ function generateUniqueRoomCode(size = 12) {
 
 export const createWaitingRoom = async (req, res) => {
     const { body, headers } = req;
-    console.log('create waiting room: body - ', body)
-    console.log('create waiting room: auth - ', headers['authorization'])
+    // console.log('create waiting room: body - ', body)
+    // console.log('create waiting room: auth - ', headers['authorization'])
     console.log('create waiting room uid: ', req.app.locals.uid)
     try {
         const data = createWaitingRoomSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
@@ -41,6 +41,7 @@ export const createWaitingRoom = async (req, res) => {
 
 export const getAllStudentsInWaitingRoom = async (req, res) => {
     const queryParams = req.query
+    console.log('get all students in waiting room uid: ', req.app.locals.uid)
     try {
         if (!queryParams.roomCode) {
             return res.status(422).json({ errors: 'roomCode query param is required' });
