@@ -10,7 +10,6 @@ export const createWaitingRoomSchema = yup
     
     export const destroyWaitingRoomSchema = yup
     .object({
-        waiting_room_name: yup.string().trim().required(),
         room_code_pk: yup.string().trim().required()
     })
     .required();

@@ -68,7 +68,6 @@ const WaitingList = () => {
         }
     }
 
-
     const removeStudent = async (studentID) => {
         const user = auth.currentUser;
         const token = user && (await user.getIdToken());
@@ -83,6 +82,24 @@ const WaitingList = () => {
             },
             body: JSON.stringify({
                 studentID_pk: studentID
+            }),
+        })
+        console.log(response)
+    }
+
+    const deleteRoom = async () => {
+        const user = auth.currentUser;
+        const token = user && (await user.getIdToken());
+
+        let url = `http://localhost:4000/waitingRoom/destroyWaitingRoom`
+        let response = await fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                room_code_pk: roomCode
             }),
         })
         console.log(response)
@@ -136,8 +153,8 @@ const WaitingList = () => {
                 </List>
             </div>
             {/* TODO: give delete waiting list the functionality */}
-            <Box style={{ marginTop: '50px' }} onClick={() => navigate("/")}>
-                <Button variant="contained" className="shadow" sx={{
+            <Box style={{ marginTop: '50px' }} onClick={() => navigate("/dashboard")}>
+                <Button onClick={() => deleteRoom()} variant="contained" className="shadow" sx={{
                     color: 'white', borderRadius: '30px', minWidth: '35%',
                     minHeight: '3rem', background: 'red', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
                 }}>
