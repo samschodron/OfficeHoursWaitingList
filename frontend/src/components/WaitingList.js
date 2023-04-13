@@ -70,6 +70,22 @@ const WaitingList = () => {
         }
     }
 
+
+    const removeStudent = async (studentID) => {
+        console.log(studentID);
+        let url = `http://localhost:4000/student/leaveWaitingRoom`
+        let response = await fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-type': "application/json"
+            },
+            body: JSON.stringify({
+                studentID_pk: studentID
+            }),
+        })
+        console.log(response)
+    }   
+
     useEffect(() => {
         updateList()
 
@@ -111,6 +127,7 @@ const WaitingList = () => {
                                 <IconButton edge="end" aria-label="more">
                                     <MoreVertIcon />
                                 </IconButton>
+                                <Button onClick={() => removeStudent(item["studentID_pk"])}>Remove</Button>
                             </ListItemSecondaryAction>
                         </ListItem>
                     ))}
