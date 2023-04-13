@@ -2,12 +2,14 @@ import db from '../dbconfig.js'
 import crypto from 'crypto'
 import { createWaitingRoomSchema } from './validators/waitingRoomValidator.js'
 import { destroyWaitingRoomSchema } from './validators/waitingRoomValidator.js'
-function generateUniqueRoomCode(size = 12) {
+function generateUniqueRoomCode(size = 4) {
     return crypto.randomBytes(size).toString('hex');
 }
 
 export const createWaitingRoom = async (req, res) => {
     const { body } = req;
+    const user_id = req.app.locals.uid
+
     try {
         const data = createWaitingRoomSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
         let teachingAssistantFirstName = data['teaching_assistant_first_name']
@@ -16,7 +18,7 @@ export const createWaitingRoom = async (req, res) => {
 
         let roomCode = generateUniqueRoomCode()
 
-        let sqlQuery = `INSERT INTO teaching_assistant (room_code_pk, teaching_assistant_first_name, teaching_assistant_last_name, time_created, waiting_room_name) VALUES ("${roomCode}", "${teachingAssistantFirstName}", "${teachingAssistantlastName}", now(), "${waitingRoomName}")`;
+        let sqlQuery = `INSERT INTO teaching_assistant (room_code_pk, teaching_assistant_first_name, teaching_assistant_last_name, time_created, waiting_room_name, user_id) VALUES ("${roomCode}", "${teachingAssistantFirstName}", "${teachingAssistantlastName}", now(), "${waitingRoomName}", "${user_id}")`;
 
         db.query(sqlQuery, function (error, result, fields) {
             if (error) {
@@ -38,6 +40,8 @@ export const createWaitingRoom = async (req, res) => {
 
 export const getAllStudentsInWaitingRoom = async (req, res) => {
     const queryParams = req.query
+    const user_id = req.app.locals.uid
+
     try {
         if (!queryParams.roomCode) {
             return res.status(422).json({ errors: 'roomCode query param is required' });
@@ -62,10 +66,10 @@ export const getAllStudentsInWaitingRoom = async (req, res) => {
     }
 }
 
-export const destroyWaitingRoom = async(req,res) => {
+export const destroyWaitingRoom = async (req, res) => {
     const { body } = req;
-    try{
-    const data = destroyWaitingRoomSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
+    try {
+        const data = destroyWaitingRoomSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
         // check to see if this is how you should do it
         let roomCode = data['room_code_pk']
         //let waitingRoomName = data['waiting_room_name']
@@ -73,12 +77,12 @@ export const destroyWaitingRoom = async(req,res) => {
 
         let sqlQuery = `UPDATE teaching_assistant SET time_destroyed = now() WHERE room_code_pk = "${roomCode}"`;
         //let sqlQuerydel = `DELETE FROM teaching_assistant WHERE room_code_pk = ${roomCode}`
-        db.query(sqlQuery, function(error,rseult,fields){
+        db.query(sqlQuery, function (error, rseult, fields) {
             if (error) {
                 res.status(400).json({ message: 'failed to delete a waiting room' })
                 throw error;
             }
-            else{
+            else {
                 return res.json({
                     message: 'successfully deleted waiting room',
                     data
@@ -86,8 +90,8 @@ export const destroyWaitingRoom = async(req,res) => {
                 });
             }
         });
-}
-catch{
-    return res.status(422).json({ errors: error.errors });
-}
+    }
+    catch {
+        return res.status(422).json({ errors: error.errors });
+    }
 }

@@ -3,6 +3,7 @@ import { Box, Button, TextField, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import createGraphic from '../images/create-graphic.jpg';
 import smLogo from '../images/AOWL_SM.png';
+import { auth } from "../firebase"
 
 const CreateListPage = () => {
     const navigate = useNavigate();
@@ -23,11 +24,15 @@ const CreateListPage = () => {
     }
 
     const createWaitingListApi = async () => {
+        const user = auth.currentUser;
+        const token = user && (await user.getIdToken());
+
         let url = `http://localhost:4000/waitingRoom/createWaitingRoom`
         let response = await fetch(url, {
             method: "POST",
             headers: {
-                'Content-type': "application/json"
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
                 teaching_assistant_first_name: formInput["firstName"],
@@ -54,9 +59,9 @@ const CreateListPage = () => {
 
     return (
         <Box>
-            <img src={createGraphic} alt="Computer graphic" className="create-graphic"/>
+            <img src={createGraphic} alt="Computer graphic" className="create-graphic" />
             <rect className="background-rect">
-                <img src={smLogo} alt="Small logo" className="create-logo"/>
+                <img src={smLogo} alt="Small logo" className="create-logo" />
                 <Typography className="create-header" variant="h5" component="h5" gutterBottom>
                     Create a List
                 </Typography>

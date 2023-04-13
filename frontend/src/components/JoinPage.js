@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import {Box, Button, TextField, Typography} from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import joinGraphic from '../images/join_graphic.jpg';
 import smLogo from '../images/AOWL_SM.png';
 import { useNavigate } from 'react-router-dom';
+import { auth } from "../firebase"
 
 const JoinPage = () => {
     const navigate = useNavigate();
@@ -21,11 +22,15 @@ const JoinPage = () => {
     }
 
     const joinWaitingListApi = async () => {
+        const user = auth.currentUser;
+        const token = user && (await user.getIdToken());
+
         let url = `http://localhost:4000/student/joinWaitingRoom`
         let response = await fetch(url, {
             method: "POST",
             headers: {
-                'Content-type': "application/json"
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
                 student_first_name: formInput["firstName"],
@@ -57,7 +62,7 @@ const JoinPage = () => {
             <rect className="background-rect">
                 <img src={smLogo} alt="Small logo" className="join-logo" />
                 <Typography className="join-header" variant="h5" component="h5" gutterBottom>Join a Room</Typography>
-                <div className="textFieldW" style={{marginRight: '1rem'}}>
+                <div className="textFieldW" style={{ marginRight: '1rem' }}>
                     <TextField
                         name="firstName"
                         label="First Name"
@@ -81,7 +86,7 @@ const JoinPage = () => {
                         onChange={handleFormInputChange}
                     />
                 </div>
-                <div className="textFieldW" style={{marginLeft: '1rem'}}>
+                <div className="textFieldW" style={{ marginLeft: '1rem' }}>
                     <TextField
                         name="lastName"
                         label="Last Name"
@@ -96,7 +101,7 @@ const JoinPage = () => {
                                 transform: 'translate(15%, .3%) scale(0.75)',
                             },
                             '& .MuiOutlinedInput-input': {
-                            paddingLeft: '4%', // Adjust this value to move the input lower in the TextField
+                                paddingLeft: '4%', // Adjust this value to move the input lower in the TextField
                             },
                         }}
                         InputProps={{
@@ -105,33 +110,35 @@ const JoinPage = () => {
                         onChange={handleFormInputChange}
                     />
                 </div>
-                <div className="textFieldW" style={{marginTop: '1rem', width:'85%'}}>
-                        <TextField
-                            name="roomCode"
-                            label="Room Code"
-                            variant="outlined"
-                            value={formInput.roomCode}
-                            fullWidth
-                            sx={{
-                                '& .MuiOutlinedInput-root': {
-                                    borderRadius: '15px',
-                                },
-                                '& .MuiInputLabel-shrink': {
-                                    transform: 'translate(20%, .3%) scale(0.75)',
-                                },
-                                '& .MuiOutlinedInput-input': {
-                                    paddingLeft: '3%', // Adjust this value to move the input lower in the TextField
-                                },
-                            }}
-                            InputProps={{
-                                notched: false,
-                            }}
-                            onChange={handleFormInputChange}
-                        />
-                    </div>
+                <div className="textFieldW" style={{ marginTop: '1rem', width: '85%' }}>
+                    <TextField
+                        name="roomCode"
+                        label="Room Code"
+                        variant="outlined"
+                        value={formInput.roomCode}
+                        fullWidth
+                        sx={{
+                            '& .MuiOutlinedInput-root': {
+                                borderRadius: '15px',
+                            },
+                            '& .MuiInputLabel-shrink': {
+                                transform: 'translate(20%, .3%) scale(0.75)',
+                            },
+                            '& .MuiOutlinedInput-input': {
+                                paddingLeft: '3%', // Adjust this value to move the input lower in the TextField
+                            },
+                        }}
+                        InputProps={{
+                            notched: false,
+                        }}
+                        onChange={handleFormInputChange}
+                    />
+                </div>
                 <Box onClick={formIsValid} className="button-join">
-                    <Button variant="contained" className="shadow" sx={{ color: 'white', borderRadius: '30px', minWidth: '35%',
-                        minHeight: '3rem', background: '#000000', '&:hover': {background: '#000000', opacity: 0.7, transition: '.2s'}}}>
+                    <Button variant="contained" className="shadow" sx={{
+                        color: 'white', borderRadius: '30px', minWidth: '35%',
+                        minHeight: '3rem', background: '#000000', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
+                    }}>
                         Join
                     </Button>
                 </Box>
