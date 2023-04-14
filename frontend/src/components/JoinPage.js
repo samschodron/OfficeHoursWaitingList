@@ -7,6 +7,7 @@ import { auth } from "../firebase"
 
 const JoinPage = () => {
     const navigate = useNavigate();
+    const [error, setError] = useState('')
     const [formInput, setFormInput] = useState({
         firstName: "",
         lastName: "",
@@ -47,15 +48,16 @@ const JoinPage = () => {
     const formIsValid = async () => {
         for (const property in formInput) {
             if (isEmpty(formInput[property]) && property !== "studentID") {
+                console.log("hit1");
                 return false;
             }
             if(hasWhiteSpace(formInput[property].trim())) {
-                console.log("hit");
+                setError('Error: Input cannot contain whitespace')
+                console.log("hit2");
                 return false;
             }
         }
-        // const studentID = await joinWaitingListApi()
-        console.log("hit2");
+        joinWaitingListApi()
         navigate('/dashboard', { state: { formInput: formInput/*, studentID: studentID*/ } });
         return true;
     }
@@ -141,6 +143,9 @@ const JoinPage = () => {
                         }}
                         onChange={handleFormInputChange}
                     />
+                </div>  
+                <div>
+                    {error && <p>{error}</p>}
                 </div>
                 <Box onClick={formIsValid} className="button-join">
                     <Button variant="contained" className="shadow" sx={{
@@ -150,7 +155,7 @@ const JoinPage = () => {
                         Join
                     </Button>
                 </Box>
-            </rect>
+            </rect> 
         </Box>
     );
 };
