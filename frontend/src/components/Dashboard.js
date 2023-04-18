@@ -1,14 +1,45 @@
-import React, {useEffect} from 'react';
-import {onAuthStateChanged} from "firebase/auth";
-import {signOut} from "firebase/auth";
-import {auth} from '../firebase';
-import {useNavigate} from 'react-router-dom';
-import {Container, Typography, Box, Button, Grid} from '@mui/material';
-import {Link} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { onAuthStateChanged } from "firebase/auth";
+import { signOut } from "firebase/auth";
+import { auth } from '../firebase';
+import { useNavigate } from 'react-router-dom';
+import { Container, Typography, Box, Button, Grid } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
 
     const navigate = useNavigate();
+    const [openWaitingLists, setOpenWaitingLists] = useState([])
+
+    const getAllOpenWaitingLists = async () => {
+        const user = auth.currentUser;
+        const token = user && (await user.getIdToken());
+
+        let url = `http://localhost:4000/dashboard/get-all-open-waiting-lists`
+        fetch(url, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then(res => res.json())
+            .then(data => {
+                let openWaitingLists = data["query_result"]
+                setOpenWaitingLists(openWaitingLists)
+                console.log('all waiting lists: ', openWaitingLists)
+            })
+    }
+
+    useEffect(() => {
+        getAllOpenWaitingLists()
+
+        const interval = setInterval(() => {
+            getAllOpenWaitingLists();
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [openWaitingLists])
 
     const handleLogout = () => {
         signOut(auth).then(() => {
@@ -34,10 +65,21 @@ const Dashboard = () => {
 
     }, [])
 
+    const navigateToWaitingListPage = (firstName, lastName, roomName, roomCode) => {
+        let formInput = {
+            formInput: {
+                firstName: firstName,
+                lastName: lastName,
+                roomName: roomName
+            }
+        }
+        navigate('/waiting-list', { state: { formInput: formInput, roomCode: roomCode } })
+    }
+
     return (
         <Container maxWidth="lg">
             <Box mt={4}>
-                <Typography variant="h3" sx={{fontWeight: "bold"}} gutterBottom>
+                <Typography variant="h3" sx={{ fontWeight: "bold" }} gutterBottom>
                     Dashboard
                 </Typography>
 
@@ -63,7 +105,7 @@ const Dashboard = () => {
                             variant="contained"
                             color="primary"
                             fullWidth
-                            sx={{fontSize: "30px", fontWeight: "bold", borderRadius: 1, paddingY: 20 }}
+                            sx={{ fontSize: "30px", fontWeight: "bold", borderRadius: 1, paddingY: 20 }}
                         >
                             Join A List
                         </Button>
@@ -76,7 +118,7 @@ const Dashboard = () => {
                             variant="contained"
                             color="primary"
                             fullWidth
-                            sx={{fontSize: "30px", fontWeight: "bold", borderRadius: 1, paddingY: 20 }}
+                            sx={{ fontSize: "30px", fontWeight: "bold", borderRadius: 1, paddingY: 20 }}
                         >
                             Create A List
                         </Button>
@@ -89,13 +131,37 @@ const Dashboard = () => {
                         color="secondary"
                         fullWidth
                         onClick={handleLogout}
-                        sx={{fontWeight: "bold", borderRadius: 1, paddingY: 2 }}
+                        sx={{ fontWeight: "bold", borderRadius: 1, paddingY: 2 }}
                     >
                         Logout
                     </Button>
                 </Box>
             </Box>
-        </Container>
+            <Box>
+                <Typography variant="h5" gutterBottom>
+                    All open waiting lists:
+                    {openWaitingLists.map(waitingList => {
+                        let firstName = waitingList["teaching_assistant_first_name"]
+                        let lastName = waitingList["teaching_assistant_last_name"]
+                        let roomName = waitingList["waiting_room_name"]
+                        let roomCode = waitingList["room_code_pk"]
+                        return (<Box>
+                            <h3>TA name: {firstName} {lastName}</h3>
+                            <h3>room name: {roomName}</h3>
+                            <h3>room code: {roomCode}</h3>
+                            <Box onClick={() => navigateToWaitingListPage(firstName, lastName, roomName, roomCode)}>
+                                <Button variant="contained" className="shadow" sx={{
+                                    color: 'white', borderRadius: '30px', minWidth: '35%',
+                                    minHeight: '3rem', background: 'purple', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
+                                }}>
+                                    Enter this waitlist
+                                </Button>
+                            </Box>
+                        </Box>)
+                    })}
+                </Typography>
+            </Box>
+        </Container >
     );
 };
 
