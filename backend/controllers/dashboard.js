@@ -22,3 +22,26 @@ export const getAllOpenWaitingLists = async (req, res) => {
         res.status(422).json({ errors: error.error })
     }
 }
+
+export const getAllJoinedWaitingRooms = async (req, res) => {
+    const { body } = req;
+    const user_id = req.app.locals.uid;
+
+    try {
+        let sqlQuery = `SELECT student_first_name, student_last_name, room_code_pk FROM student WHERE time_left is NULL AND user_id = "${user_id}" ORDER BY time_entered`
+
+        db.query(sqlQuery, function (error, result, fields) {
+            if (error) {
+                res.status(400).json({ message: `failed to retrieve all joined waiting lists created by user ${user_id}` })
+                throw error;
+            } else {
+                return res.json({
+                    message: `successfully retrieved all joined waiting lists created by user ${user_id}`,
+                    query_result: result
+                })
+            }
+        })
+    } catch (error) {
+        res.status(422).json({ errors: error.error })
+    }
+}
