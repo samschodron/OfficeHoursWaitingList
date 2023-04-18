@@ -16,34 +16,53 @@ export const joinWaitingRoom = async (req, res) => {
         let studentLastName = data['student_last_name']
         let roomCode = data['room_code']
 
-        db.query(`SELECT * FROM teaching_assistant WHERE room_code_pk= "${roomCode}"`, function (err, row) {
+        // check that the waiting list exists
+        db.query(`SELECT * FROM teaching_assistant WHERE room_code_pk = "${roomCode}"`, function (err, rows) {
             if (err) {
                 res.status(400).json({ message: 'failed to join room' })
-                throw err;
-            }
-            else {
-                if (row && row.length) {
-                    db.query(`INSERT INTO student (student_first_name, student_last_name, time_entered, time_left, room_code_pk, is_waiting, user_id) VALUES ('${studentFirstName}', '${studentLastName}', now(), null, '${roomCode}', 1, '${user_id}');`, function (err, result, fields) {
-                        if (err) {
-                            res.status(400).json({ message: 'failed to join a waiting room' })
-                            throw err;
-                        }
-                        console.log(result);
-                    })
 
-                    db.query(`SELECT LAST_INSERT_ID();`, function (err, result, fields) {
-                        if (err) {
-                            res.status(400).json({ message: 'failed to join a waiting room' })
-                            throw err;
-                        }
-                        return (result);
-                    })
-                } else {
-                    console.log('List does not exist!');
-                    return res.status(403).json({ message: "List does not exist!" });
-                }
+                throw err;
+            } else if (rows.length === 0) {
+                console.log('list doesnt exist')
+
+                return res.status(403).json({ message: "List does not exist!" });
+            } else {
+                // check that this user has not joined the list yet
+                db.query(`SELECT * FROM student WHERE room_code_pk = "${roomCode}" AND user_id = "${user_id}"`, function (err, result) {
+                    if (err) {
+                        console.log('error trying to join the room')
+                        res.status(400).json({ message: 'failed to join room' })
+
+                        throw err;
+                    } else if (result.length >= 1) {
+                        console.log('user has alr joined this list')
+
+                        return res.status(403).json({ message: "user has already joined this list" });
+                    } else {
+                        console.log('adding student')
+                        // add student into the list
+                        db.query(`INSERT INTO student (student_first_name, student_last_name, time_entered, time_left, room_code_pk, is_waiting, user_id) VALUES ('${studentFirstName}', '${studentLastName}', now(), null, '${roomCode}', 1, '${user_id}');`, function (err, result, fields) {
+                            if (err) {
+                                res.status(400).json({ message: 'failed to join a waiting room' })
+
+                                throw err;
+                            }
+                            console.log(result);
+                        })
+
+                        // get the primary key of student
+                        db.query(`SELECT LAST_INSERT_ID();`, function (err, result, fields) {
+                            if (err) {
+                                res.status(400).json({ message: 'failed to join a waiting room' })
+
+                                throw err;
+                            }
+                            return (result);
+                        })
+                    }
+                })
             }
-        });
+        })
     } catch (error) {
         return res.status(422).json({ errors: error.errors });
     }

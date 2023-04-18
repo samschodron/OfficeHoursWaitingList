@@ -27,7 +27,6 @@ const Dashboard = () => {
             .then(data => {
                 let openWaitingLists = data["query_result"]
                 setOpenWaitingLists(openWaitingLists)
-                console.log('all waiting lists: ', openWaitingLists)
             })
     }
 
@@ -36,10 +35,10 @@ const Dashboard = () => {
 
         const interval = setInterval(() => {
             getAllOpenWaitingLists();
-        }, 5000);
+        }, 30000);
 
         return () => clearInterval(interval);
-    }, [openWaitingLists])
+    }, [])
 
     const handleLogout = () => {
         signOut(auth).then(() => {
@@ -63,7 +62,7 @@ const Dashboard = () => {
             }
         });
 
-    }, [])
+    }, [openWaitingLists])
 
     const navigateToWaitingListPage = (firstName, lastName, roomName, roomCode) => {
         let formInput = {
