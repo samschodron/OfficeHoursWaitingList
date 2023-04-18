@@ -98,11 +98,6 @@ export const studentFind = async(req, res) =>{
         let roomCode = data['room_code_pk']
         let sqlQuery = `SELECT studentID_pk FROM student WHERE room_code_pk = "${roomCode}" AND is_waiting = 1 ORDER BY time_entered ASC`;
     
-        // TODO counts the number of records before it finds the one it is looking for
-        // TODO returns how many positions there were before finding the record it is looking for
-        // inner joins on teaching assistant with the similarity being the room codes
-        // another possibility is to try and use the count function
-        // TODO iterate through returned list and test it
         // return a json and go through it to find matching student ID
         db.query(sqlQuery, function(error,result,fields){
             // throws error if something goes wrong
