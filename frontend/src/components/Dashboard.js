@@ -137,27 +137,30 @@ const Dashboard = () => {
                     </Button>
                 </Box>
             </Box>
-            <Box>
-                <Typography variant="h5" gutterBottom>
-                    All open waiting lists:
+            <Typography variant="h3">All open waiting lists:</Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
+                <Typography variant="h5" gutterBottom >
                     {openWaitingLists.map(waitingList => {
                         let firstName = waitingList["teaching_assistant_first_name"]
                         let lastName = waitingList["teaching_assistant_last_name"]
                         let roomName = waitingList["waiting_room_name"]
                         let roomCode = waitingList["room_code_pk"]
-                        return (<Box>
-                            <h3>TA name: {firstName} {lastName}</h3>
-                            <h3>room name: {roomName}</h3>
-                            <h3>room code: {roomCode}</h3>
-                            <Box onClick={() => navigateToWaitingListPage(firstName, lastName, roomName, roomCode)}>
-                                <Button variant="contained" className="shadow" sx={{
-                                    color: 'white', borderRadius: '30px', minWidth: '35%',
-                                    minHeight: '3rem', background: 'purple', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
-                                }}>
-                                    Enter this waitlist
-                                </Button>
-                            </Box>
-                        </Box>)
+
+                        return (
+                            <Box sx={{ border: '3px solid black', margin: '5px', borderRadius: '10px', minWidth: '600px' }}>
+                                <h3>TA name: {firstName} {lastName}</h3>
+                                <h3>room name: {roomName}</h3>
+                                <h3>room code: {roomCode}</h3>
+                                <Box onClick={() => navigateToWaitingListPage(firstName, lastName, roomName, roomCode)}
+                                >
+                                    <Button variant="contained" className="shadow" sx={{
+                                        color: 'white', borderRadius: '30px', minWidth: '35%',
+                                        minHeight: '3rem', background: 'primary', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
+                                    }}>
+                                        Enter this waitlist
+                                    </Button>
+                                </Box>
+                            </Box>)
                     })}
                 </Typography>
             </Box>
