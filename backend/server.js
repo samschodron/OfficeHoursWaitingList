@@ -1,5 +1,6 @@
 import waitingRoomRoutes from './routes/waitingRoom.js'
 import studentRoutes from './routes/student.js'
+import dashboardRoutes from './routes/dashboard.js'
 import bodyParser from "body-parser";
 import cors from "cors";
 import { VerifyToken } from "./middleware/verifyToken.js"
@@ -17,6 +18,7 @@ app.use('/', VerifyToken)
 
 app.use('/waitingRoom', waitingRoomRoutes)
 app.use('/student', studentRoutes)
+app.use('/dashboard', dashboardRoutes)
 
 app.listen(port, () => {
     console.log(`Server started on port ${port}`)

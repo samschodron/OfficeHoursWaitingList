@@ -161,6 +161,14 @@ const WaitingList = () => {
                     End Room
                 </Button>
             </Box>
+            <Box style={{ marginTop: '50px' }} onClick={() => navigate("/dashboard")}>
+                <Button variant="contained" className="shadow" sx={{
+                    color: 'white', borderRadius: '30px', minWidth: '35%',
+                    minHeight: '3rem', background: 'black', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
+                }}>
+                    Back to Dashboard
+                </Button>
+            </Box>
 
             <div className="room-code-container">
                 <div className="room-code">Room Code: {roomCode}</div>
