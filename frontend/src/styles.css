@@ -19,11 +19,12 @@ body {
 }
 
 .logo-image {
-    position: absolute;
+    position: fixed;
+    top: -7%;
+    left: 1%;
     max-width: 30%;
     max-height: 30%;
-    transform: translate(-275%, -20%);
-    z-index: -1;
+    z-index: 1000;
 }
 
 .mockup-image {
@@ -178,4 +179,13 @@ body {
 
 .room-code:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.auth-Logo {
+    position: fixed;
+    top: -7%;
+    left: 41.5%;
+    max-width: 30%;
+    max-height: 30%;
+    z-index: 1000;
 }

@@ -1,7 +1,41 @@
-import React, { useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
+import React, {useState} from 'react'
+import {NavLink, useNavigate} from 'react-router-dom';
+import {createUserWithEmailAndPassword} from 'firebase/auth';
+import {auth} from '../firebase';
+import {Button, Container, TextField, Typography, Link} from '@mui/material';
+import {makeStyles} from '@mui/styles';
+import logo from "../images/AOWL.png";
+
+const useStyles = makeStyles((theme) => ({
+    formContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: theme.spacing(2),
+    },
+    title: {
+        marginTop: theme.spacing(4),
+        marginBottom: theme.spacing(2),
+    },
+    signUpLink: {
+        marginTop: theme.spacing(2),
+        textAlign: 'center',
+    },
+    root: {
+        minHeight: '100vh',
+        backgroundImage: 'linear-gradient(45deg, #C5AAE5FF 30%, #7e50f2 90%)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    paper: {
+        padding: theme.spacing(4),
+        backgroundColor: 'white',
+        borderRadius: theme.spacing(1),
+    },
+    error: {
+        color: 'red',
+    },
+}));
 
 const SignupPage = () => {
     const navigate = useNavigate();
@@ -33,69 +67,74 @@ const SignupPage = () => {
 
 
     }
+
+    const classes = useStyles();
+
     return (
-        <div>
-            <h1> Signup Page </h1>
-            <form>
-                <div>
-                    <label htmlFor="email-address">
-                        Email address
-                    </label>
-                    <input
-                        type="email"
-                        label="Email address"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        placeholder="Email address"
-                    />
-                </div>
+        <div className={classes.root}>
+            <img src={logo} alt="Logo" className={"auth-Logo"} />
+            <Container maxWidth="xs" className={classes.paper}>
+                <Typography variant="h4" sx={{fontWeight: "bold", marginBottom: "5%"}} className={classes.title}>
+                    Signup
+                </Typography>
 
-                <div>
-                    <label htmlFor="password1">
-                        Password
-                    </label>
-                    <input
-                        type="password"
-                        label="Create password"
-                        value={password1}
-                        onChange={(e) => setPassword1(e.target.value)}
-                        required
-                        placeholder="Password"
-                    />
-                </div>
-                <div>
-                    <label htmlFor="password2">
-                        Confirm Password
-                    </label>
-                    <input
-                        type="password"
-                        label="Confirm password"
-                        value={password2}
-                        onChange={(e) => setPassword2(e.target.value)}
-                        required
-                        placeholder="Confirm Password"
-                    />
-                </div>
+                <form>
+                    <div className={classes.formContainer}>
+                        <TextField
+                            type="email"
+                            label="Email address"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            fullWidth
+                        />
 
-                {error && <p>{error}</p>}
-                <button
-                    type="submit"
-                    onClick={onSubmit}
-                >
-                    Sign up
-                </button>
+                        <TextField
+                            type="password"
+                            label="Create password"
+                            value={password1}
+                            onChange={(e) => setPassword1(e.target.value)}
+                            required
+                            fullWidth
+                        />
 
-            </form>
+                        <TextField
+                            type="password"
+                            label="Confirm password"
+                            value={password2}
+                            onChange={(e) => setPassword2(e.target.value)}
+                            required
+                            fullWidth
+                        />
 
-            <p>
-                Already have an account?{' '}
-                <NavLink to="/login" >
-                    Sign in
-                </NavLink>
-            </p>
+                        {error && (
+                            <Typography variant="body2" className={classes.error}>
+                                {error}
+                            </Typography>
+                        )}
+
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            onClick={onSubmit}
+                            fullWidth
+                            sx={{borderRadius: "25px"}}
+                        >
+                            Sign up
+                        </Button>
+                    </div>
+                </form>
+
+                <Typography className={classes.signUpLink}>
+                    Already have an account?{' '}
+                    <Link component={NavLink} to="/login" color="secondary">
+                        Sign in
+                    </Link>
+                </Typography>
+            </Container>
         </div>
-    )
-}
+    );
+};
 
 export default SignupPage;

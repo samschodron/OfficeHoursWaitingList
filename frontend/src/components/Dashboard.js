@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { onAuthStateChanged } from "firebase/auth";
-import { signOut } from "firebase/auth";
-import { auth } from '../firebase';
-import { useNavigate } from 'react-router-dom';
-import { Container, Typography, Box, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import React, {useEffect} from 'react';
+import {onAuthStateChanged} from "firebase/auth";
+import {signOut} from "firebase/auth";
+import {auth} from '../firebase';
+import {useNavigate} from 'react-router-dom';
+import {Container, Typography, Box, Button, Grid} from '@mui/material';
+import {Link} from 'react-router-dom';
 
 const Dashboard = () => {
 
@@ -35,29 +35,68 @@ const Dashboard = () => {
     }, [])
 
     return (
-        <div>
-            <h1>Dashboard</h1>
-            <h1>You are currenly signed in as: </h1>
-            {auth.currentUser ? <h1>Email: {auth.currentUser.email}</h1> : <h1>Not signed in</h1>}
+        <Container maxWidth="lg">
+            <Box mt={4}>
+                <Typography variant="h3" sx={{fontWeight: "bold"}} gutterBottom>
+                    Dashboard
+                </Typography>
 
-            <div>
-                <Link to="/join-page" className="shadow" style={{ textDecoration: 'none' }}>
-                    <Button>
-                        Join A List
+                <Typography variant="h5" gutterBottom>
+                    You are currently signed in as:
+                </Typography>
+
+                {auth.currentUser ? (
+                    <Typography variant="h6" gutterBottom>
+                        <strong>Email:</strong> {auth.currentUser.email}
+                    </Typography>
+                ) : (
+                    <Typography variant="h6" gutterBottom>
+                        Not signed in
+                    </Typography>
+                )}
+
+                <Grid container spacing={2} mt={2}>
+                    <Grid item xs={12} sm={6}>
+                        <Button
+                            component={Link}
+                            to="/join-page"
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            sx={{fontSize: "30px", fontWeight: "bold", borderRadius: 1, paddingY: 20 }}
+                        >
+                            Join A List
+                        </Button>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                        <Button
+                            component={Link}
+                            to="/create-list-page"
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            sx={{fontSize: "30px", fontWeight: "bold", borderRadius: 1, paddingY: 20 }}
+                        >
+                            Create A List
+                        </Button>
+                    </Grid>
+                </Grid>
+
+                <Box mt={2}>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        fullWidth
+                        onClick={handleLogout}
+                        sx={{fontWeight: "bold", borderRadius: 1, paddingY: 2 }}
+                    >
+                        Logout
                     </Button>
-                </Link>
-                <Link to="/create-list-page" className="" style={{ textDecoration: 'none' }}>
-                    <Button>
-                        Create A List
-                    </Button>
-                </Link>
+                </Box>
+            </Box>
+        </Container>
+    );
+};
 
-                <Button onClick={handleLogout}>
-                    Logout
-                </Button>
-            </div>
-        </div>
-    )
-}
-
-export default Dashboard
+export default Dashboard;
