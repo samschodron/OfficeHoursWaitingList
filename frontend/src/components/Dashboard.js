@@ -10,6 +10,7 @@ const Dashboard = () => {
 
     const navigate = useNavigate();
     const [openWaitingLists, setOpenWaitingLists] = useState([])
+    const [joinedWaitingLists, setJoinedWaitingLists] = useState([])
 
     const getAllOpenWaitingLists = async () => {
         const user = auth.currentUser;
@@ -30,6 +31,37 @@ const Dashboard = () => {
                 console.log('all waiting lists: ', openWaitingLists)
             })
     }
+    
+    const getAllJoinedWaitingLists = async () => {
+        const user = auth.currentUser;
+        const token = user && (await user.getIdToken());
+
+        let url = `http://localhost:4000/dashboard/getAllJoinedWaitingRooms`
+        fetch(url, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then(res => res.json())
+            .then(data => {
+                let joinedWaitingLists = data["query_result"]
+                setJoinedWaitingLists(joinedWaitingLists)
+                console.log(joinedWaitingLists)
+                console.log('all joined lists: ', openWaitingLists)
+            })
+    }
+
+    useEffect(() => {
+        getAllJoinedWaitingLists()
+
+        const interval = setInterval(() => {
+            getAllJoinedWaitingLists();
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [joinedWaitingLists])
 
     useEffect(() => {
         getAllOpenWaitingLists()
@@ -67,13 +99,20 @@ const Dashboard = () => {
 
     const navigateToWaitingListPage = (firstName, lastName, roomName, roomCode) => {
         let formInput = {
-            formInput: {
-                firstName: firstName,
-                lastName: lastName,
-                roomName: roomName
-            }
+            firstName: firstName,
+            lastName: lastName,
+            roomName: roomName
         }
         navigate('/waiting-list', { state: { formInput: formInput, roomCode: roomCode } })
+    }
+
+    const navigateToJoinedListPage = (firstName, lastName, roomName, roomCode) => {
+        let formInput = {
+            firstName: firstName,
+            lastName: lastName,
+            roomName: roomName
+        }
+        navigate('/dashboard', { state: { formInput: formInput, roomCode: roomCode } })
     }
 
     return (
@@ -152,6 +191,31 @@ const Dashboard = () => {
                                 <h3>room name: {roomName}</h3>
                                 <h3>room code: {roomCode}</h3>
                                 <Box onClick={() => navigateToWaitingListPage(firstName, lastName, roomName, roomCode)}
+                                >
+                                    <Button variant="contained" className="shadow" sx={{
+                                        color: 'white', borderRadius: '30px', minWidth: '35%',
+                                        minHeight: '3rem', background: 'primary', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
+                                    }}>
+                                        Enter this waitlist
+                                    </Button>
+                                </Box>
+                            </Box>)
+                    })}
+                </Typography>
+            </Box>
+            <Typography variant="h3">All joined waiting lists:</Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
+                <Typography variant="h5" gutterBottom >
+                    {joinedWaitingLists.map(joinedList => {
+                        let firstName = joinedList["student_first_name"]
+                        let lastName = joinedList["student_last_name"]
+                        let roomCode = joinedList["room_code_pk"]
+
+                        return (
+                            <Box sx={{ border: '3px solid black', margin: '5px', borderRadius: '10px', minWidth: '600px' }}>
+                                <h3>Your name: {firstName} {lastName}</h3>
+                                <h3>room code: {roomCode}</h3>
+                                <Box onClick={() => navigateToJoinedListPage(firstName, lastName, roomCode)}
                                 >
                                     <Button variant="contained" className="shadow" sx={{
                                         color: 'white', borderRadius: '30px', minWidth: '35%',
