@@ -28,7 +28,8 @@ export const joinWaitingRoom = async (req, res) => {
                 return res.status(403).json({ message: "List does not exist!" });
             } else {
                 // check that this user has not joined the list yet
-                db.query(`SELECT * FROM student WHERE room_code_pk = "${roomCode}" AND user_id = "${user_id}"`, function (err, result) {
+                db.query(`SELECT * FROM student WHERE room_code_pk = "${roomCode}" AND user_id = "${user_id}" AND is_waiting = 1`, function (err, result) {
+                    console.log(result)
                     if (err) {
                         console.log('error trying to join the room')
                         res.status(400).json({ message: 'failed to join room' })
