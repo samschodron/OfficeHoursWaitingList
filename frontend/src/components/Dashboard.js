@@ -108,7 +108,7 @@ const Dashboard = () => {
             firstName: firstName,
             lastName: lastName
         }
-        navigate('/student-view', { state: { formInput: formInput, studentID: studentID} });
+        navigate('/student-view', { state: { formInput: formInput, studentID: studentID, roomCode: roomCode} });
     }
 
     return (

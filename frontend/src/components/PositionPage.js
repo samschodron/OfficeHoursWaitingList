@@ -106,7 +106,9 @@ const PositionPage = () =>{
                     <Typography variant="h4"  className={classes.leftpart}>
                         &nbsp;<b>Name: {firstName} {lastName}</b>
                     </Typography>
-
+                    <div className="room-code-container">
+                        <div className="room-code"sx={{ background: 'linear-gradient(to bottom, #BE50F2, #3888FF)' }}>Room Code: {roomCode}</div>
+                    </div>
                 </Box>
                 
             </Box> 
