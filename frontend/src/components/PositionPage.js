@@ -85,23 +85,27 @@ const PositionPage = () =>{
                         <b>3</b>
                     </Typography>            
                 </div>
-                <Box onClick={() => removeStudent(studentID)} className="container">
-                    <Link to="/dashboard" className="" style={{ textDecoration: 'none' }}>
-                        <Button variant="contained" className="button-leave" sx={{
-                            color: 'white', borderRadius: '30px', minWidth: '15rem',
-                            minHeight: '3rem', background: '#000000', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
-                        }}>Leave Room
-                        </Button>
-                    </Link>
-                </Box>
+            <Box style={{ marginTop: '50px' }} onClick={() => navigate("/dashboard")}>
+                <Button onClick={() => removeStudent(studentID)} variant="contained" className="shadow" sx={{
+                    color: 'white', borderRadius: '30px', minWidth: '35%',
+                    minHeight: '3rem', background: 'red', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
+                }}>
+                    Leave Room
+                </Button>
+            </Box>
+            <Box style={{ marginTop: '50px' }} onClick={() => navigate("/dashboard")}>
+                <Button variant="contained" className="shadow" sx={{
+                    color: 'white', borderRadius: '30px', minWidth: '35%',
+                    minHeight: '3rem', background: 'black', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
+                }}>
+                    Back to Dashboard
+                </Button>
+            </Box>
             </Box>
                 <Box display="flex" >
                     <Typography variant="h4"  className={classes.leftpart}>
-                        &nbsp;<b>Name:{firstName} {lastName}</b>
+                        &nbsp;<b>Name: {firstName} {lastName}</b>
                     </Typography>
-                    <div className="room-code-container">
-                        <div className="room-code"sx={{ background: 'linear-gradient(to bottom, #BE50F2, #3888FF)' }}>Room Code: {roomCode}</div>
-                    </div>
 
                 </Box>
                 
