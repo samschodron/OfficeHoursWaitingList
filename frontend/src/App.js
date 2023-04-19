@@ -7,7 +7,7 @@ import CreateListPage from './components/CreateListPage';
 import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignupPage';
 import Dashboard from './components/Dashboard';
-import TempStudentPage from './components/TempStudentPage'
+import PositionPage from './components/PositionPage'
 import PrivateRoutes from './utils/PrivateRoutes';
 import './App.css';
 import './styles.css';
@@ -47,7 +47,7 @@ const App = () => (
                 <Route path="/join-page" element={<JP />} />
                 <Route path="/create-list-page" element={<CreateListPage />} />
                 <Route path="/waiting-list" element={<WaitingList />} />
-                <Route path="/student-view" element={<TempStudentPage />} />
+                <Route path="/student-view" element={<PositionPage />} />
             </Route>
         </Routes>
     </div>

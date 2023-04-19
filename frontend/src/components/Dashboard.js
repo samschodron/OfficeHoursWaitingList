@@ -105,12 +105,12 @@ const Dashboard = () => {
         navigate('/waiting-list', { state: { formInput: formInput, roomCode: roomCode } })
     }
 
-    const navigateToJoinedListPage = (firstName, lastName, studentID) => {
+    const navigateToJoinedListPage = (firstName, lastName, studentID, roomCode) => {
         let formInput = {
             firstName: firstName,
             lastName: lastName
         }
-        navigate('/student-view', { state: { formInput: formInput, studentID: studentID} });
+        navigate('/student-view', { state: { formInput: formInput, studentID: studentID, roomCode: roomCode} });
     }
 
     return (
@@ -214,7 +214,7 @@ const Dashboard = () => {
                             <Box sx={{ border: '3px solid black', margin: '5px', borderRadius: '10px', minWidth: '600px' }}>
                                 <h3>Your name: {firstName} {lastName}</h3>
                                 <h3>room code: {roomCode}</h3>
-                                <Box onClick={() => navigateToJoinedListPage(firstName, lastName, studentID)}
+                                <Box onClick={() => navigateToJoinedListPage(firstName, lastName, studentID, roomCode)}
                                 >
                                     <Button variant="contained" className="shadow" sx={{
                                         color: 'white', borderRadius: '30px', minWidth: '35%',
