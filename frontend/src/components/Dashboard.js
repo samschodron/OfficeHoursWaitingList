@@ -47,8 +47,6 @@ const Dashboard = () => {
             .then(data => {
                 let joinedWaitingLists = data["query_result"]
                 setJoinedWaitingLists(joinedWaitingLists)
-                console.log(joinedWaitingLists)
-                console.log('all joined lists: ', openWaitingLists)
             })
     }
 

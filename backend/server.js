@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 
 // parse token and get the uid for each request
-app.use('/', VerifyToken)
+// app.use('/', VerifyToken)
 
 app.use('/waitingRoom', waitingRoomRoutes)
 app.use('/student', studentRoutes)

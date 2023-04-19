@@ -8,6 +8,7 @@ import { auth } from "../firebase"
 const JoinPage = () => {
     const navigate = useNavigate();
     const [error, setError] = useState('')
+    const [studentID, setStudentID] = useState([])
     const [formInput, setFormInput] = useState({
         firstName: "",
         lastName: "",
@@ -39,8 +40,12 @@ const JoinPage = () => {
                 room_code: formInput["roomCode"].trim()
             }),
         })
-        console.log(response)
-        return response;
+        .then(response => {
+            return response.json()
+          })
+          .then(data => {
+            setStudentID(data)
+          })
     }
 
     const formIsValid = async () => {
@@ -53,9 +58,9 @@ const JoinPage = () => {
                 return false;
             }
         }
-        const studentID = joinWaitingListApi()
-        navigate('/dashboard');
-        //navigate('/student-view', { state: { formInput: formInput, studentID: studentID } });
+        joinWaitingListApi();
+        console.log(studentID);
+        navigate('/student-view', { state: { formInput: formInput, studentID: studentID } });
         return true;
     }
 
