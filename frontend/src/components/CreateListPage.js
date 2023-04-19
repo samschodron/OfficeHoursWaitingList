@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Box, Button, TextField, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import React, {useState} from 'react';
+import {Box, Button, TextField, Typography, Grid, Paper} from '@mui/material';
+import {useNavigate} from 'react-router-dom';
 import createGraphic from '../images/create-graphic.jpg';
-import smLogo from '../images/AOWL_SM.png';
-import { auth } from "../firebase"
+import {auth} from "../firebase"
+import logo from "../images/AOWL.png";
 
 const CreateListPage = () => {
     const navigate = useNavigate();
@@ -16,7 +16,7 @@ const CreateListPage = () => {
     const handleFormInputChange = (event) => {
         const inputName = event.target.name;
         const inputValue = event.target.value;
-        setFormInput({ ...formInput, [inputName]: inputValue })
+        setFormInput({...formInput, [inputName]: inputValue})
     }
 
     const isEmpty = (str) => {
@@ -53,91 +53,91 @@ const CreateListPage = () => {
             }
         }
         const roomCode = await createWaitingListApi()
-        navigate('/waiting-list', { state: { formInput: formInput, roomCode: roomCode } });
+        navigate('/waiting-list', {state: {formInput: formInput, roomCode: roomCode}});
         return true;
     }
 
     return (
-        <Box>
-            <img src={createGraphic} alt="Computer graphic" className="create-graphic" />
-            <rect className="background-rect">
-                <img src={smLogo} alt="Small logo" className="create-logo" />
-                <Typography className="create-header" variant="h5" component="h5" gutterBottom>
-                    Create a List
-                </Typography>
-                <div className="textFieldW" style={{ marginLeft: '2rem' }}>
-                    <TextField
-                        name="firstName"
-                        label="First Name"
-                        variant="outlined"
-                        fullWidth
+        <Grid container style={{height: '100vh'}}>
+            <Grid item xs={12} md={6} sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight: '100vh',
+                backgroundImage: 'linear-gradient(to bottom, #7b50f2, #b792de)', // Add the gradient background here
+            }}>
+                <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" height="100%"
+                     p={3}>
+                    <img src={logo} alt="Logo" className={"join-logo"} />
+                    <Box
                         sx={{
-                            '& .MuiOutlinedInput-root': {
-                                borderRadius: '15px',
-                            },
-                            '& .MuiInputLabel-shrink': {
-                                transform: 'translate(15%, .3%) scale(0.75)',
-                            },
+                            background: 'white',
+                            borderRadius: 2,
+                            width: '180%',
+                            padding: 5,
+                            boxShadow: 3,
                         }}
-                        InputProps={{
-                            notched: false,
-                        }}
-                        onChange={handleFormInputChange}
-                    />
-                </div>
-                <div className="textFieldW" style={{ marginLeft: '2rem' }}>
-                    <TextField
-                        name="lastName"
-                        label="Last Name"
-                        variant="outlined"
-                        fullWidth
-                        sx={{
-                            '& .MuiOutlinedInput-root': {
-                                borderRadius: '15px',
-                            },
-                            '& .MuiInputLabel-shrink': {
-                                transform: 'translate(15%, .3%) scale(0.75)',
-                            },
-                        }}
-                        InputProps={{
-                            notched: false,
-                        }}
-                        onChange={handleFormInputChange}
-                    />
-                </div>
-                <div className="textFieldW" style={{ marginLeft: '2rem', marginTop: '2rem', width: '85%' }}>
-                    <TextField
-                        name="roomName"
-                        label="Room Name"
-                        variant="outlined"
-                        fullWidth
-                        sx={{
-                            '& .MuiOutlinedInput-root': {
-                                borderRadius: '15px',
-                            },
-                            '& .MuiInputLabel-shrink': {
-                                transform: 'translate(20%, .3%) scale(0.75)',
-                            },
-                            '& .MuiOutlinedInput-input': {
-                                paddingLeft: '3%', // Adjust this value to move the input lower in the TextField
-                            },
-                        }}
-                        InputProps={{
-                            notched: false,
-                        }}
-                        onChange={handleFormInputChange}
-                    />
-                </div>
-                <Box onClick={formIsValid} className="button-join">
-                    <Button variant="contained" className="shadow" sx={{
-                        color: 'white', borderRadius: '30px', minWidth: '35%',
-                        minHeight: '3rem', background: '#000000', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
-                    }}>
-                        Create
-                    </Button>
+                    >
+                        <Typography variant="h4" component="h4" gutterBottom
+                                    style={{fontWeight: 'bold', marginBottom: '2rem'}}>
+                            Create a List
+                        </Typography>
+                        <Box display="flex" flexDirection="column" width="100%">
+                            <Box mt={2}>
+                            <TextField
+                                name="firstName"
+                                label="First Name"
+                                variant="outlined"
+                                fullWidth
+                                onChange={handleFormInputChange}
+                            />
+                            </Box>
+                            <Box mt={2}>
+                            <TextField
+                                name="lastName"
+                                label="Last Name"
+                                variant="outlined"
+                                fullWidth
+                                onChange={handleFormInputChange}
+                            />
+                            </Box>
+                            <Box mt={2}>
+                            <TextField
+                                name="roomName"
+                                label="Room Name"
+                                variant="outlined"
+                                fullWidth
+                                onChange={handleFormInputChange}
+                            />
+                            </Box>
+                            <Box mt={3}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={formIsValid}
+                                    sx={{
+                                        marginTop: '20px',
+                                        color: 'white',
+                                        borderRadius: '30px',
+                                        minWidth: '100%',
+                                        minHeight: '3rem',
+                                        background: '#000000',
+                                        '&:hover': {background: '#000000', opacity: 0.7, transition: '.2s'}
+                                    }}>
+                                    Create
+                                </Button>
+                            </Box>
+                        </Box>
+                    </Box>
                 </Box>
-            </rect >
-        </Box >
+            </Grid>
+            <Grid item xs={12} sm={6}>
+                <Box display="flex" justifyContent="center" alignItems="center" height="100%">
+                    <img src={createGraphic} alt="Computer graphic" style={{width: '100%', maxWidth: '800px'}}/>
+                </Box>
+            </Grid>
+        </Grid>
     );
 };
 
