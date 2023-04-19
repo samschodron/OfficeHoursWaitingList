@@ -111,7 +111,7 @@ export const studentFind = async(req, res) =>{
                for(var i = 0; i < result.length; i++) {
                 if(result[i].studentID_pk == id){
                     count++;
-                    break;
+                    break; 
                 }
                 else{
                     count++;
