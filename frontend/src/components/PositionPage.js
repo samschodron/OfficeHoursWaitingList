@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Typography,Toolbar,AppBar } from '@mui/material';
+import { Box, Button, Typography, Toolbar, AppBar } from '@mui/material';
 import { Link } from 'react-router-dom';
 import logo from '../images/AOWL.png';
 import { makeStyles } from "@mui/styles";
@@ -33,12 +33,12 @@ const useStyles = makeStyles({
 
 });
 
-const PositionPage = () =>{
+const PositionPage = () => {
     const classes = useStyles();
     const navigate = useNavigate();
     const { state } = useLocation()
     const { firstName, lastName } = state.formInput
-    const roomCode= state.roomCode;
+    const roomCode = state.roomCode;
     const studentID = state.studentID;
 
     const removeStudent = async (studentID) => {
@@ -47,7 +47,7 @@ const PositionPage = () =>{
 
         console.log(studentID);
         let url = `http://localhost:4000/student/leaveWaitingRoom`
-        let response = fetch(url, {
+        let response = await fetch(url, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -66,52 +66,52 @@ const PositionPage = () =>{
             <AppBar position="static" sx={{ background: 'linear-gradient(to bottom, #BE50F2, #3888FF)' }}>
                 <Toolbar>
                     <img src={logo} alt="Logo" className="header-logo" />
-                    <Typography variant="h4" component="h4"  style={{ fontWeight: 'bold' }}>
-                        
+                    <Typography variant="h4" component="h4" style={{ fontWeight: 'bold' }}>
+
                     </Typography>
                     <Typography variant="h4" component="h4" className="waiting-room-ta" style={{ fontWeight: 'bold' }}>
-                        TA: 
+                        TA:
                     </Typography>
                 </Toolbar>
-                </AppBar>
+            </AppBar>
 
 
-            <Box className={classes.container}>     
+            <Box className={classes.container}>
                 <div className={classes.title}>
-                    <Typography  variant="h3">
+                    <Typography variant="h3">
                         <b>Your Position</b>
-                    </Typography>     
-                    <Typography  fontSize={200}>
-                        <b>3</b>
-                    </Typography>            
-                </div>
-            <Box style={{ marginTop: '50px' }} onClick={() => navigate("/dashboard")}>
-                <Button onClick={() => removeStudent(studentID)} variant="contained" className="shadow" sx={{
-                    color: 'white', borderRadius: '30px', minWidth: '35%',
-                    minHeight: '3rem', background: 'red', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
-                }}>
-                    Leave Room
-                </Button>
-            </Box>
-            <Box style={{ marginTop: '50px' }} onClick={() => navigate("/dashboard")}>
-                <Button variant="contained" className="shadow" sx={{
-                    color: 'white', borderRadius: '30px', minWidth: '35%',
-                    minHeight: '3rem', background: 'black', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
-                }}>
-                    Back to Dashboard
-                </Button>
-            </Box>
-            </Box>
-                <Box display="flex" >
-                    <Typography variant="h4"  className={classes.leftpart}>
-                        &nbsp;<b>Name: {firstName} {lastName}</b>
                     </Typography>
-                    <div className="room-code-container">
-                        <div className="room-code"sx={{ background: 'linear-gradient(to bottom, #BE50F2, #3888FF)' }}>Room Code: {roomCode}</div>
-                    </div>
+                    <Typography fontSize={200}>
+                        <b>3</b>
+                    </Typography>
+                </div>
+                <Box style={{ marginTop: '50px' }} onClick={() => removeStudent(studentID)}>
+                    <Button variant="contained" className="shadow" sx={{
+                        color: 'white', borderRadius: '30px', minWidth: '35%',
+                        minHeight: '3rem', background: 'red', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
+                    }}>
+                        Leave Room
+                    </Button>
                 </Box>
-                
-            </Box> 
+                <Box style={{ marginTop: '50px' }} onClick={() => navigate("/dashboard")}>
+                    <Button variant="contained" className="shadow" sx={{
+                        color: 'white', borderRadius: '30px', minWidth: '35%',
+                        minHeight: '3rem', background: 'black', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
+                    }}>
+                        Back to Dashboard
+                    </Button>
+                </Box>
+            </Box>
+            <Box display="flex" >
+                <Typography variant="h4" className={classes.leftpart}>
+                    &nbsp;<b>Name: {firstName} {lastName}</b>
+                </Typography>
+                <div className="room-code-container">
+                    <div className="room-code" sx={{ background: 'linear-gradient(to bottom, #BE50F2, #3888FF)' }}>Room Code: {roomCode}</div>
+                </div>
+            </Box>
+
+        </Box>
     );
 }
 

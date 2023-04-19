@@ -30,7 +30,7 @@ const Dashboard = () => {
                 setOpenWaitingLists(openWaitingLists)
             })
     }
-    
+
     const getAllJoinedWaitingLists = async () => {
         const user = auth.currentUser;
         const token = user && (await user.getIdToken());
@@ -65,7 +65,7 @@ const Dashboard = () => {
 
         const interval = setInterval(() => {
             getAllOpenWaitingLists();
-        }, 30000);
+        }, 5000);
 
         return () => clearInterval(interval);
     }, [])
@@ -108,7 +108,7 @@ const Dashboard = () => {
             firstName: firstName,
             lastName: lastName
         }
-        navigate('/student-view', { state: { formInput: formInput, studentID: studentID, roomCode: roomCode} });
+        navigate('/student-view', { state: { formInput: formInput, studentID: studentID, roomCode: roomCode } });
     }
 
     return (
