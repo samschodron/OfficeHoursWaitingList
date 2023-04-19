@@ -77,6 +77,9 @@ export const leaveWaitingRoom = async (req, res) => {
                     db.query(`UPDATE student SET time_left = now(), is_waiting = 0 WHERE studentID_pk = ${id}`, function (err, result, fields) {
                         if (err) throw err;
                         console.log('Successfully removed from wait list.');
+                        return res.json({
+                            message: 'Successfully removed from wait list.'
+                        });
                     })
                 } else {
                     console.log('Student was not found in list!');
