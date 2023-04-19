@@ -105,7 +105,7 @@ export const studentFind = async(req, res) =>{
                 res.status(400).json({ message: 'Student doesn\'t exist!' })
                 throw error;
             }
-            // prints result of the query
+            // prints result of the query 
             else{
                 var count = 0;
                for(var i = 0; i < result.length; i++) {
