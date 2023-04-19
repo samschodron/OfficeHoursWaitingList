@@ -5,6 +5,8 @@ import logo from '../images/AOWL.png';
 import { makeStyles } from "@mui/styles";
 import Header from "./Header";
 import { useLocation } from 'react-router-dom';
+import { auth } from '../firebase';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
     title: {
@@ -33,11 +35,30 @@ const useStyles = makeStyles({
 
 const PositionPage = () =>{
     const classes = useStyles();
+    const navigate = useNavigate();
     const { state } = useLocation()
-    const { firstName, lastName, roomCode } = state.formInput
-    const roomName= state.roomName
-    const taFirst= state.taFirst
-    const taLast= state.taLast
+    const { firstName, lastName } = state.formInput
+    const roomCode= state.roomCode;
+    const studentID = state.studentID;
+
+    const removeStudent = async (studentID) => {
+        const user = auth.currentUser;
+        const token = user && (await user.getIdToken());
+
+        console.log(studentID);
+        let url = `http://localhost:4000/student/leaveWaitingRoom`
+        let response = fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                studentID_pk: studentID
+            }),
+        })
+        navigate('/dashboard')
+    }
 
 
     return (
@@ -46,10 +67,10 @@ const PositionPage = () =>{
                 <Toolbar>
                     <img src={logo} alt="Logo" className="header-logo" />
                     <Typography variant="h4" component="h4"  style={{ fontWeight: 'bold' }}>
-                        {roomName}
+                        
                     </Typography>
                     <Typography variant="h4" component="h4" className="waiting-room-ta" style={{ fontWeight: 'bold' }}>
-                        TA: {taFirst}{taFirst}
+                        TA: 
                     </Typography>
                 </Toolbar>
                 </AppBar>
@@ -64,7 +85,7 @@ const PositionPage = () =>{
                         <b>3</b>
                     </Typography>            
                 </div>
-                <Box className="container">
+                <Box onClick={() => removeStudent(studentID)} className="container">
                     <Link to="/dashboard" className="" style={{ textDecoration: 'none' }}>
                         <Button variant="contained" className="button-leave" sx={{
                             color: 'white', borderRadius: '30px', minWidth: '15rem',
