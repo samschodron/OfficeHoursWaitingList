@@ -39,26 +39,23 @@ const JoinPage = () => {
                 room_code: formInput["roomCode"].trim()
             }),
         })
-        let jsonResponse = await response.json()
-        let studentID = jsonResponse["studentID_pk"]
-
-        // return studentID
+        console.log(response)
+        return response;
     }
 
     const formIsValid = async () => {
         for (const property in formInput) {
             if (isEmpty(formInput[property]) && property !== "studentID") {
-                console.log("hit1");
                 return false;
-            }
+            }   
             if(hasWhiteSpace(formInput[property].trim())) {
                 setError('Error: Input cannot contain whitespace')
-                console.log("hit2");
                 return false;
             }
         }
-        joinWaitingListApi()
-        navigate('/dashboard', { state: { formInput: formInput/*, studentID: studentID*/ } });
+        const studentID = joinWaitingListApi()
+        navigate('/dashboard');
+        //navigate('/student-view', { state: { formInput: formInput, studentID: studentID } });
         return true;
     }
 
