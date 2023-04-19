@@ -31,12 +31,14 @@ export const joinWaitingRoom = async (req, res) => {
                         console.log(result);
                     })
 
-                    db.query(`SELECT LAST_INSERT_ID();`, function (err, result, fields) {
+                    db.query(`SELECT LAST_INSERT_ID() AS LastID;`, function (err, result, fields) {
                         if (err) {
                             res.status(400).json({ message: 'failed to join a waiting room' })
                             throw err;
                         }
-                        return (result);
+                        return res.json({
+                            studentID_pk: result[0].LastID
+                        })
                     })
                 } else {
                     console.log('List does not exist!');
