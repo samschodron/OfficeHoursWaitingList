@@ -99,11 +99,9 @@ body {
 }
 
 .join-logo {
-    position: absolute;
-    overflow: hidden;
-    width: 30rem;
-    text-align: center;
-    transform: translate(15%,-20%);
+    max-width: 35%;
+    max-height: 35%;
+    z-index: 1000;
 }
 
 .create-logo {

@@ -31,12 +31,15 @@ export const joinWaitingRoom = async (req, res) => {
                         console.log(result);
                     })
 
-                    db.query(`SELECT LAST_INSERT_ID();`, function (err, result, fields) {
+                    db.query(`SELECT LAST_INSERT_ID() AS LastID;`, function (err, result, fields) {
                         if (err) {
                             res.status(400).json({ message: 'failed to join a waiting room' })
                             throw err;
                         }
-                        return (result);
+                        console.log(result);
+                        return res.json({
+                            message: result[0].LastID
+                        });
                     })
                 } else {
                     console.log('List does not exist!');
@@ -74,6 +77,9 @@ export const leaveWaitingRoom = async (req, res) => {
                     db.query(`UPDATE student SET time_left = now(), is_waiting = 0 WHERE studentID_pk = ${id}`, function (err, result, fields) {
                         if (err) throw err;
                         console.log('Successfully removed from wait list.');
+                        return res.json({
+                            message: 'Successfully removed from wait list.'
+                        });
                     })
                 } else {
                     console.log('Student was not found in list!');
