@@ -137,10 +137,10 @@ export const studentFind = async(req, res) =>{
 
 
         });
-}
-catch (error) {
-    return res.status(422).json({ errors: error.errors });
-}
-
-
     }
+    catch (error) {
+        return res.status(422).json({ errors: error.errors });
+    }
+
+
+}
