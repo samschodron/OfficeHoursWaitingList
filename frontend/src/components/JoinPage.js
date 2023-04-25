@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import {Box, Button, TextField, Typography, Grid} from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Button, TextField, Typography, Grid } from '@mui/material';
 import joinGraphic from '../images/join_graphic.jpg';
-import {useNavigate} from 'react-router-dom';
-import {auth} from "../firebase"
+import { useNavigate } from 'react-router-dom';
+import { auth } from "../firebase"
 import logo from "../images/AOWL.png";
 
 const JoinPage = () => {
@@ -14,9 +14,10 @@ const JoinPage = () => {
         lastName: "",
         roomCode: "",
     })
+    const [roomName, setRoomName] = useState('')
 
     const handleFormInputChange = (event) => {
-        setFormInput({...formInput, [event.target.name]: event.target.value})
+        setFormInput({ ...formInput, [event.target.name]: event.target.value })
     }
 
     const isEmpty = (str) => {
@@ -24,6 +25,9 @@ const JoinPage = () => {
     }
 
     const joinWaitingListApi = async () => {
+        let lastInsertedId = -1
+        let roomName = ''
+
         const user = auth.currentUser;
         const token = user && (await user.getIdToken());
 
@@ -44,8 +48,16 @@ const JoinPage = () => {
                 return response.json()
             })
             .then(data => {
-                setStudentID(data)
+                lastInsertedId = data["last_inserted_id"]
+                roomName = data["query_result"]["waiting_room_name"]
+                console.log('after joining result: ', data)
+                console.log('room name: ', data["query_result"]["waiting_room_name"])
+                console.log('last inserted id: ', data["last_inserted_id"])
+                setStudentID(lastInsertedId)
+                setRoomName(roomName)
             })
+
+        return [lastInsertedId, roomName]
     }
 
     const formIsValid = async () => {
@@ -58,9 +70,9 @@ const JoinPage = () => {
                 return false;
             }
         }
-        joinWaitingListApi();
+        const [lastInsertedId, roomName] = await joinWaitingListApi();
         console.log(studentID);
-        navigate('/student-view', {state: {formInput: formInput, studentID: studentID}});
+        navigate('/student-view', { state: { formInput: formInput, studentID: lastInsertedId, roomName: roomName } });
         return true;
     }
 
@@ -72,7 +84,7 @@ const JoinPage = () => {
         <Grid container>
             <Grid item xs={12} sm={6}>
                 <Box height="100vh" display="flex" justifyContent="center" alignItems="center">
-                    <img src={joinGraphic} alt="Computer graphic" style={{maxWidth: '90%', maxHeight: '90%'}}/>
+                    <img src={joinGraphic} alt="Computer graphic" style={{ maxWidth: '90%', maxHeight: '90%' }} />
                 </Box>
             </Grid>
             <Grid item xs={12} md={6} sx={{
@@ -84,7 +96,7 @@ const JoinPage = () => {
                 backgroundImage: 'linear-gradient(to bottom, #7b50f2, #b792de)', // Add the gradient background here
             }}>
                 <Box height="100vh" bgcolor="gradient.linear(to-r, #2D7DD2, #0FA3B1)" display="flex"
-                     flexDirection="column" justifyContent="center" alignItems="center">
+                    flexDirection="column" justifyContent="center" alignItems="center">
                     <img src={logo} alt="Logo" className={"join-logo"} />
                     <Box
                         sx={{
@@ -95,7 +107,7 @@ const JoinPage = () => {
                             boxShadow: 3,
                         }}
                     >
-                        <Typography variant="h4" component="h4" gutterBottom sx={{fontWeight: 'bold', color: 'black', marginBottom: '2rem', textAlign: 'left'}}>
+                        <Typography variant="h4" component="h4" gutterBottom sx={{ fontWeight: 'bold', color: 'black', marginBottom: '2rem', textAlign: 'left' }}>
                             Join a Room
                         </Typography>
                         <TextField
@@ -133,7 +145,7 @@ const JoinPage = () => {
                             minWidth: '100%',
                             minHeight: '3rem',
                             background: '#000000',
-                            '&:hover': {background: '#000000', opacity: 0.7, transition: '.2s'}
+                            '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
                         }}>
                             Join
                         </Button>

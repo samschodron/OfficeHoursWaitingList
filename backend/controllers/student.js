@@ -37,9 +37,16 @@ export const joinWaitingRoom = async (req, res) => {
                             throw err;
                         }
                         console.log(result);
-                        return res.json({
-                            message: result[0].LastID
-                        });
+                        // return res.json({
+                        //     message: result[0].LastID
+                        // });
+                        let lastInsertedId = result[0].LastID
+                        console.log('last inserted id: ', lastInsertedId)
+
+                        db.query(`SELECT waiting_room_name FROM teaching_assistant WHERE room_code_pk = '${roomCode}';`, function (err, result, fields) {
+
+                            return res.json({ message: 'successfully joined the waiting list', last_inserted_id: lastInsertedId, query_result: result[0] })
+                        })
                     })
                 } else {
                     console.log('List does not exist!');
@@ -97,43 +104,43 @@ export const leaveWaitingRoom = async (req, res) => {
 /* Function to find the position of a student currently in a waitlist
      * @return  The current position of the student in the waiting list
      */
-export const studentFind = async(req, res) =>{
+export const studentFind = async (req, res) => {
     const { body } = req;
-   
-    try{
+
+    try {
         const data = findStudentSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
         let id = data['studentID_pk']
         let roomCode = data['room_code_pk']
         let sqlQuery = `SELECT studentID_pk FROM student WHERE room_code_pk = "${roomCode}" AND is_waiting = 1 ORDER BY time_entered ASC`;
-   
+
         // return a json and go through it to find matching student ID
-        db.query(sqlQuery, function(error,result,fields){
+        db.query(sqlQuery, function (error, result, fields) {
             // throws error if something goes wrong
-            if(error){
+            if (error) {
                 res.status(400).json({ message: 'Student doesn\'t exist!' })
                 throw error;
             }
             // prints result of the query
-            else{
+            else {
                 var count = 0;
-               for(var i = 0; i < result.length; i++) {
-                if(result[i].studentID_pk == id){
-                    count++;
-                    break;
-                }
-                else{
-                    count++;
-                }
+                for (var i = 0; i < result.length; i++) {
+                    if (result[i].studentID_pk == id) {
+                        count++;
+                        break;
+                    }
+                    else {
+                        count++;
+                    }
 
 
-               }
-               
-            return res.json({
-                message: result,
-                data,
-                count
-            });
-        }
+                }
+
+                return res.json({
+                    message: result,
+                    data,
+                    count
+                });
+            }
 
 
         });

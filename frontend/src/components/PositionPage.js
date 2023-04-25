@@ -37,9 +37,10 @@ const PositionPage = () => {
     const classes = useStyles();
     const navigate = useNavigate();
     const { state } = useLocation()
-    const { firstName, lastName } = state.formInput
-    const roomCode = state.roomCode;
+    const { firstName, lastName, roomCode } = state.formInput
     const studentID = state.studentID;
+    const roomName = state.roomName
+    console.log(firstName, lastName, roomCode, studentID, roomName)
 
     const removeStudent = async (studentID) => {
         const user = auth.currentUser;
@@ -66,15 +67,14 @@ const PositionPage = () => {
             <AppBar position="static" sx={{ background: 'linear-gradient(to bottom, #BE50F2, #3888FF)' }}>
                 <Toolbar>
                     <img src={logo} alt="Logo" className="header-logo" />
-                    <Typography variant="h4" component="h4" style={{ fontWeight: 'bold' }}>
-
+                    <Typography variant="h4" component="h4" className="waiting-room-name" style={{ fontWeight: 'bold' }}>
+                        {roomName}
                     </Typography>
                     <Typography variant="h4" component="h4" className="waiting-room-ta" style={{ fontWeight: 'bold' }}>
                         TA:
                     </Typography>
                 </Toolbar>
             </AppBar>
-
 
             <Box className={classes.container}>
                 <div className={classes.title}>
