@@ -37,13 +37,9 @@ export const joinWaitingRoom = async (req, res) => {
                             throw err;
                         }
                         console.log(result);
-                        // return res.json({
-                        //     message: result[0].LastID
-                        // });
                         let lastInsertedId = result[0].LastID
-                        console.log('last inserted id: ', lastInsertedId)
 
-                        db.query(`SELECT waiting_room_name FROM teaching_assistant WHERE room_code_pk = '${roomCode}';`, function (err, result, fields) {
+                        db.query(`SELECT waiting_room_name, teaching_assistant_first_name, teaching_assistant_last_name FROM teaching_assistant WHERE room_code_pk = '${roomCode}';`, function (err, result, fields) {
 
                             return res.json({ message: 'successfully joined the waiting list', last_inserted_id: lastInsertedId, query_result: result[0] })
                         })

@@ -40,7 +40,8 @@ const PositionPage = () => {
     const { firstName, lastName, roomCode } = state.formInput
     const studentID = state.studentID;
     const roomName = state.roomName
-    console.log(firstName, lastName, roomCode, studentID, roomName)
+    const teachingAssistantName = state.teachingAssistantName
+    console.log(firstName, lastName, roomCode, studentID, roomName, teachingAssistantName)
 
     const removeStudent = async (studentID) => {
         const user = auth.currentUser;
@@ -71,7 +72,7 @@ const PositionPage = () => {
                         {roomName}
                     </Typography>
                     <Typography variant="h4" component="h4" className="waiting-room-ta" style={{ fontWeight: 'bold' }}>
-                        TA:
+                        TA: {teachingAssistantName}
                     </Typography>
                 </Toolbar>
             </AppBar>

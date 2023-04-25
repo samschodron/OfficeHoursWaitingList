@@ -27,6 +27,7 @@ const JoinPage = () => {
     const joinWaitingListApi = async () => {
         let lastInsertedId = -1
         let roomName = ''
+        let teachingAssistantName = ''
 
         const user = auth.currentUser;
         const token = user && (await user.getIdToken());
@@ -50,14 +51,12 @@ const JoinPage = () => {
             .then(data => {
                 lastInsertedId = data["last_inserted_id"]
                 roomName = data["query_result"]["waiting_room_name"]
-                console.log('after joining result: ', data)
-                console.log('room name: ', data["query_result"]["waiting_room_name"])
-                console.log('last inserted id: ', data["last_inserted_id"])
+                teachingAssistantName = data["query_result"]["teaching_assistant_first_name"] + ' ' + data["query_result"]["teaching_assistant_last_name"]
                 setStudentID(lastInsertedId)
                 setRoomName(roomName)
             })
 
-        return [lastInsertedId, roomName]
+        return [lastInsertedId, roomName, teachingAssistantName]
     }
 
     const formIsValid = async () => {
@@ -70,9 +69,8 @@ const JoinPage = () => {
                 return false;
             }
         }
-        const [lastInsertedId, roomName] = await joinWaitingListApi();
-        console.log(studentID);
-        navigate('/student-view', { state: { formInput: formInput, studentID: lastInsertedId, roomName: roomName } });
+        const [lastInsertedId, roomName, teachingAssistantName] = await joinWaitingListApi();
+        navigate('/student-view', { state: { formInput: formInput, studentID: lastInsertedId, roomName: roomName, teachingAssistantName: teachingAssistantName } });
         return true;
     }
 
