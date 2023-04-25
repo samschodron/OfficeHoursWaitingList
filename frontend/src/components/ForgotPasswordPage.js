@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../firebase';
 import { Button, Container, TextField, Typography, Link } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -35,29 +36,31 @@ const useStyles = makeStyles((theme) => ({
     error: {
         color: 'red',
     },
+    infoMessage: {
+        color: 'black'
+    }
 }));
 
-const SignupPage = () => {
+const ForgotPasswordPage = () => {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('')
-    const [password1, setPassword1] = useState('');
-    const [password2, setPassword2] = useState('');
     const [error, setError] = useState('')
+    const [confirmationMessage, setConfirmationMessage] = useState('')
 
-    const onSubmit = async (e) => {
+    const onResetPassword = async (e) => {
         e.preventDefault()
 
-        if (password1 !== password2) {
-            setError('Error: Passwords do not match')
+        if (email.length < 2 || !email.includes("@")) {
+            setError('Error: Please enter a valid email address')
             return
         }
-        await createUserWithEmailAndPassword(auth, email, password1)
-            .then((userCredential) => {
-                // created successfully
-                const user = userCredential.user;
-                console.log('CREATED ACCOUNT SUCCESSFULLY - your user is: ', user);
-                navigate("/login")
+
+        await sendPasswordResetEmail(auth, email)
+            .then(() => {
+                setError('')
+                setConfirmationMessage('Password reset link has been sent to your email.')
+                console.log('sent email reset link successfully');
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -72,10 +75,13 @@ const SignupPage = () => {
         <div className={classes.root}>
             <img src={logo} alt="Logo" className={"auth-Logo"} />
             <Container maxWidth="xs" className={classes.paper}>
-                <Typography variant="h4" sx={{ fontWeight: "bold", marginBottom: "5%" }} className={classes.title}>
-                    Signup
+                <Typography variant="h3" sx={{ fontWeight: "bold", marginBottom: "5%" }} className={classes.title}>
+                    Password Reset
                 </Typography>
 
+                <Typography variant="body1" sx={{ marginBottom: "5%" }} className={classes.infoMessage}>
+                    Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you to reset it.
+                </Typography>
                 <form>
                     <div className={classes.formContainer}>
                         <TextField
@@ -87,27 +93,14 @@ const SignupPage = () => {
                             fullWidth
                         />
 
-                        <TextField
-                            type="password"
-                            label="Create password"
-                            value={password1}
-                            onChange={(e) => setPassword1(e.target.value)}
-                            required
-                            fullWidth
-                        />
-
-                        <TextField
-                            type="password"
-                            label="Confirm password"
-                            value={password2}
-                            onChange={(e) => setPassword2(e.target.value)}
-                            required
-                            fullWidth
-                        />
-
                         {error && (
                             <Typography variant="body2" className={classes.error}>
                                 {error}
+                            </Typography>
+                        )}
+                        {confirmationMessage && (
+                            <Typography variant="body2" className={classes.confirmationMessage}>
+                                {confirmationMessage}
                             </Typography>
                         )}
 
@@ -115,24 +108,18 @@ const SignupPage = () => {
                             type="submit"
                             variant="contained"
                             color="primary"
-                            onClick={onSubmit}
+                            onClick={onResetPassword}
                             fullWidth
                             sx={{ borderRadius: "25px" }}
                         >
-                            Sign up
+                            Reset My Password
                         </Button>
                     </div>
                 </form>
 
-                <Typography className={classes.signUpLink}>
-                    Already have an account?{' '}
-                    <Link component={NavLink} to="/login" color="secondary">
-                        Sign in
-                    </Link>
-                </Typography>
             </Container>
         </div>
     );
 };
 
-export default SignupPage;
+export default ForgotPasswordPage;

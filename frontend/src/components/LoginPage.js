@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {signInWithEmailAndPassword} from 'firebase/auth';
-import {auth} from '../firebase';
-import {NavLink, useNavigate} from 'react-router-dom';
-import {Button, Container, TextField, Typography, Link} from '@mui/material';
-import {makeStyles} from '@mui/styles';
+import React, { useState } from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Button, Container, TextField, Typography, Link } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import logo from "../images/AOWL.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'white',
         borderRadius: theme.spacing(1),
     },
+    error: {
+        color: 'red'
+    }
 }));
 
 const LoginPage = () => {
@@ -39,6 +42,7 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('')
 
     const onLogin = (e) => {
         e.preventDefault();
@@ -52,6 +56,7 @@ const LoginPage = () => {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                setError('The username and/or password you specified are not correct.')
                 console.log(errorCode, errorMessage)
             });
 
@@ -62,7 +67,7 @@ const LoginPage = () => {
             <img src={logo} alt="Logo" className={"auth-Logo"} />
             <Container maxWidth="xs" className={classes.paper}>
                 <Container maxWidth="xs">
-                    <Typography variant="h4" sx={{fontWeight: "bold", marginBottom: "5%"}} className={classes.title}>
+                    <Typography variant="h4" sx={{ fontWeight: "bold", marginBottom: "5%" }} className={classes.title}>
                         Login
                     </Typography>
 
@@ -88,12 +93,18 @@ const LoginPage = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
 
+                            {error && (
+                                <Typography variant="body2" className={classes.error}>
+                                    {error}
+                                </Typography>
+                            )}
+
                             <Button
                                 variant="contained"
                                 color="primary"
                                 onClick={onLogin}
                                 fullWidth
-                                sx={{borderRadius: "25px"}}
+                                sx={{ borderRadius: "25px" }}
                             >
                                 Login
                             </Button>
@@ -104,6 +115,11 @@ const LoginPage = () => {
                         No account yet?{' '}
                         <Link component={NavLink} to="/signup" color="secondary">
                             Sign up
+                        </Link>
+                    </Typography>
+                    <Typography className={classes.signUpLink}>
+                        <Link component={NavLink} to="/resetPassword" color="secondary">
+                            Forgot password?
                         </Link>
                     </Typography>
                 </Container>

@@ -6,6 +6,7 @@ import WaitingList from './components/WaitingList';
 import CreateListPage from './components/CreateListPage';
 import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignupPage';
+import ForgotPasswordPage from './components/ForgotPasswordPage';
 import Dashboard from './components/Dashboard';
 import PositionPage from './components/PositionPage'
 import PrivateRoutes from './utils/PrivateRoutes';
@@ -42,6 +43,7 @@ const App = () => (
             <Route path="/" element={<HP />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
+            <Route path="/resetPassword" element={<ForgotPasswordPage />} />
             <Route element={<PrivateRoutes />}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/join-page" element={<JP />} />
