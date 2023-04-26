@@ -34,7 +34,7 @@ export const getAllJoinedWaitingRooms = async (req, res) => {
         FROM student 
         INNER JOIN teaching_assistant
         ON student.room_code_pk = teaching_assistant.room_code_pk
-        WHERE student.time_left is NULL AND student.user_id = "${user_id}" 
+        WHERE student.time_left is NULL AND student.user_id = "${user_id}" AND teaching_assistant.time_destroyed is NULL
         ORDER BY time_entered`
 
         db.query(sqlQuery, function (error, result, fields) {
