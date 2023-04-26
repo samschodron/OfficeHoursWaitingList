@@ -5,7 +5,7 @@ import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Box, Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Link } from 'react-router-dom';
-import {makeStyles} from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
     formContainer: {
@@ -136,12 +136,13 @@ const Dashboard = () => {
         navigate('/waiting-list', { state: { formInput: formInput, roomCode: roomCode } })
     }
 
-    const navigateToJoinedListPage = (firstName, lastName, studentID, roomCode) => {
+    const navigateToJoinedListPage = (firstName, lastName, roomCode, studentID, roomName, teachingAssistantName) => {
         let formInput = {
             firstName: firstName,
-            lastName: lastName
+            lastName: lastName,
+            roomCode: roomCode
         }
-        navigate('/student-view', { state: { formInput: formInput, studentID: studentID, roomCode: roomCode } });
+        navigate('/student-view', { state: { formInput: formInput, studentID: studentID, roomName: roomName, teachingAssistantName: teachingAssistantName } });
     }
 
     return (
@@ -150,12 +151,12 @@ const Dashboard = () => {
                 <Box mt={4} p={4} bgcolor="white" borderRadius={2} boxShadow={3}>
                     <Typography variant="h3" sx={{ fontWeight: "bold" }} gutterBottom>
                         Dashboard
-                        <Typography variant="h5" sx={{marginTop: -5, textAlign: "right"}} gutterBottom>
+                        <Typography variant="h5" sx={{ marginTop: -5, textAlign: "right" }} gutterBottom>
                             Welcome,
                         </Typography>
 
                         {auth.currentUser ? (
-                            <Typography variant="h6" sx={{marginTop: -1, textAlign: "right"}} gutterBottom>
+                            <Typography variant="h6" sx={{ marginTop: -1, textAlign: "right" }} gutterBottom>
                                 <strong> {auth.currentUser.email} </strong>
                             </Typography>
                         ) : (
@@ -164,49 +165,53 @@ const Dashboard = () => {
                             </Typography>
                         )}
                     </Typography>
-                <Grid container spacing={2} mt={2}>
-                    <Grid item xs={12} sm={6}>
-                        <Button
-                            component={Link}
-                            to="/join-page"
-                            variant="outlined"
-                            fullWidth
-                            sx={{color: "black", borderWidth: "3px", borderColor: "black", fontSize: "30px", fontWeight: "bold", borderRadius: 1, paddingY: 20,  '&:hover': {
-                                    background: "rgba(0, 0, 0, 0.1)", borderWidth: "3px", borderColor: "black"
-                                }}}
-                        >
-                            Join A List
-                        </Button>
+                    <Grid container spacing={2} mt={2}>
+                        <Grid item xs={12} sm={6}>
+                            <Button
+                                component={Link}
+                                to="/join-page"
+                                variant="outlined"
+                                fullWidth
+                                sx={{
+                                    color: "black", borderWidth: "3px", borderColor: "black", fontSize: "30px", fontWeight: "bold", borderRadius: 1, paddingY: 20, '&:hover': {
+                                        background: "rgba(0, 0, 0, 0.1)", borderWidth: "3px", borderColor: "black"
+                                    }
+                                }}
+                            >
+                                Join A List
+                            </Button>
+                        </Grid>
+
+                        <Grid item xs={12} sm={6}>
+                            <Button
+                                component={Link}
+                                to="/create-list-page"
+                                variant="outlined"
+                                fullWidth
+                                sx={{
+                                    color: "black", borderWidth: "3px", borderColor: "black", fontSize: "30px", fontWeight: "bold", borderRadius: 1, paddingY: 20, '&:hover': {
+                                        background: "rgba(0, 0, 0, 0.1)", borderWidth: "3px", borderColor: "black"
+                                    }
+                                }}
+                            >
+                                Create A List
+                            </Button>
+                        </Grid>
                     </Grid>
 
-                    <Grid item xs={12} sm={6}>
+                    <Box mt={2}>
                         <Button
-                            component={Link}
-                            to="/create-list-page"
-                            variant="outlined"
+                            variant="contained"
                             fullWidth
-                            sx={{color: "black", borderWidth: "3px", borderColor: "black", fontSize: "30px", fontWeight: "bold", borderRadius: 1, paddingY: 20,  '&:hover': {
-                                    background: "rgba(0, 0, 0, 0.1)", borderWidth: "3px", borderColor: "black"
-                                }}}
+                            onClick={handleLogout}
+                            sx={{ background: "#000000", fontWeight: "bold", borderRadius: 1, paddingY: 2, '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' } }}
                         >
-                            Create A List
+                            Logout
                         </Button>
-                    </Grid>
-                </Grid>
-
-                <Box mt={2}>
-                    <Button
-                        variant="contained"
-                        fullWidth
-                        onClick={handleLogout}
-                        sx={{background: "#000000", fontWeight: "bold", borderRadius: 1, paddingY: 2, '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s'} }}
-                    >
-                        Logout
-                    </Button>
+                    </Box>
                 </Box>
-            </Box>
-                <TableContainer component={Paper} sx={{borderRadius: 2, boxShadow: 3, paddingTop: 2, marginTop: 3}}>
-                    <Typography variant="h4" sx={{textAlign: "center", fontWeight: "Bold", marginBottom: 3}}>Open Lists</Typography>
+                <TableContainer component={Paper} sx={{ borderRadius: 2, boxShadow: 3, paddingTop: 2, marginTop: 3 }}>
+                    <Typography variant="h4" sx={{ textAlign: "center", fontWeight: "Bold", marginBottom: 3 }}>Open Lists</Typography>
                     <Table sx={{ minWidth: 650 }} aria-label="open waiting lists">
                         <TableHead>
                             <TableRow>
@@ -242,8 +247,8 @@ const Dashboard = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <TableContainer component={Paper} sx={{borderRadius: 2, boxShadow: 3, paddingTop: 2, marginTop: 3}}>
-                    <Typography variant="h4" sx={{textAlign: "center", fontWeight: "Bold", marginBottom: 3}}>Joined Lists</Typography>
+                <TableContainer component={Paper} sx={{ borderRadius: 2, boxShadow: 3, paddingTop: 2, marginTop: 3 }}>
+                    <Typography variant="h4" sx={{ textAlign: "center", fontWeight: "Bold", marginBottom: 3 }}>Joined Lists</Typography>
                     <Table sx={{ minWidth: 650 }} aria-label="joined waiting lists">
                         <TableHead>
                             <TableRow>
@@ -258,8 +263,9 @@ const Dashboard = () => {
                                 let firstName = joinedList["student_first_name"]
                                 let lastName = joinedList["student_last_name"]
                                 let roomCode = joinedList["room_code_pk"]
-                                let roomName = joinedList["waiting_room_name"]
                                 let studentID = joinedList["studentID_pk"]
+                                let roomName = joinedList["waiting_room_name"]
+                                let teachingAssistantName = joinedList["teaching_assistant_first_name"] + ' ' + joinedList["teaching_assistant_last_name"]
 
                                 return (
                                     <TableRow key={studentID}>
@@ -270,7 +276,7 @@ const Dashboard = () => {
                                             <Button variant="contained" className="shadow" sx={{
                                                 color: 'white', borderRadius: '30px', minWidth: '35%',
                                                 minHeight: '3rem', background: '#000000', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
-                                            }} onClick={() => navigateToJoinedListPage(firstName, lastName, studentID, roomCode)}>
+                                            }} onClick={() => navigateToJoinedListPage(firstName, lastName, roomCode, studentID, roomName, teachingAssistantName)}>
                                                 Enter
                                             </Button>
                                         </TableCell>
@@ -280,7 +286,7 @@ const Dashboard = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-        </Container>
+            </Container>
         </div>
     );
 };
