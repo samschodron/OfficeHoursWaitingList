@@ -28,7 +28,14 @@ export const getAllJoinedWaitingRooms = async (req, res) => {
     const user_id = req.app.locals.uid;
 
     try {
-        let sqlQuery = `SELECT student_first_name, student_last_name, room_code_pk, studentID_pk FROM student WHERE time_left is NULL AND user_id = "${user_id}" ORDER BY time_entered`
+        let sqlQuery = `SELECT 
+        student.student_first_name, student.student_last_name, student.room_code_pk, student.studentID_pk,
+        teaching_assistant.teaching_assistant_first_name, teaching_assistant.teaching_assistant_last_name, teaching_assistant.waiting_room_name
+        FROM student 
+        INNER JOIN teaching_assistant
+        ON student.room_code_pk = teaching_assistant.room_code_pk
+        WHERE student.time_left is NULL AND student.user_id = "${user_id}" 
+        ORDER BY time_entered`
 
         db.query(sqlQuery, function (error, result, fields) {
             if (error) {
