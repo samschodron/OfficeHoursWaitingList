@@ -28,6 +28,7 @@ const JoinPage = () => {
         let lastInsertedId = -1
         let roomName = ''
         let teachingAssistantName = ''
+        let hasError = false;
 
         const user = auth.currentUser;
         const token = user && (await user.getIdToken());
@@ -46,7 +47,11 @@ const JoinPage = () => {
             }),
         })
             .then(response => {
-                return response.json()
+                if (!response.ok) {
+                    throw new Error(response.status);
+                } else {
+                    return response.json();
+                }
             })
             .then(data => {
                 lastInsertedId = data["last_inserted_id"]
@@ -54,9 +59,15 @@ const JoinPage = () => {
                 teachingAssistantName = data["query_result"]["teaching_assistant_first_name"] + ' ' + data["query_result"]["teaching_assistant_last_name"]
                 setStudentID(lastInsertedId)
                 setRoomName(roomName)
-            })
+            }).catch((error) => {
+                if (error.message === '403') {
+                    setError('You have already joined the list.')
+                }
+                hasError = true;
+            });
 
-        return [lastInsertedId, roomName, teachingAssistantName]
+        console.log('error is: ', hasError)
+        return hasError ? [-1, -1, -1] : [lastInsertedId, roomName, teachingAssistantName]
     }
 
     const formIsValid = async () => {
@@ -70,6 +81,10 @@ const JoinPage = () => {
             }
         }
         const [lastInsertedId, roomName, teachingAssistantName] = await joinWaitingListApi();
+        if (lastInsertedId === -1 && roomName && -1 && teachingAssistantName === -1) {
+            return false;
+        }
+
         navigate('/student-view', { state: { formInput: formInput, studentID: lastInsertedId, roomName: roomName, teachingAssistantName: teachingAssistantName } });
         return true;
     }
@@ -136,6 +151,9 @@ const JoinPage = () => {
                                 onChange={handleFormInputChange}
                             />
                         </Box>
+                        <Box mt={2}>
+                            {error && <Typography color="error">{error}</Typography>}
+                        </Box>
                         <Button onClick={formIsValid} variant="contained" sx={{
                             marginTop: '20px',
                             color: 'white',
@@ -148,10 +166,6 @@ const JoinPage = () => {
                             Join
                         </Button>
                     </Box>
-                    <Box width="80%" mb={2}>
-                        {error && <Typography color="error">{error}</Typography>}
-                    </Box>
-
                 </Box>
             </Grid>
         </Grid>
