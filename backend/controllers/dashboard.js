@@ -12,7 +12,7 @@ export const getAllOpenWaitingLists = async (req, res) => {
                 res.status(400).json({ message: `failed to retrieve all open waiting lists created by user ${user_id}` })
                 throw error;
             } else {
-                return res.json({
+                return res.status(200).json({
                     message: `successfully retrieved all open waiting lists created by user ${user_id}`,
                     query_result: result
                 })
@@ -42,7 +42,7 @@ export const getAllJoinedWaitingRooms = async (req, res) => {
                 res.status(400).json({ message: `failed to retrieve all joined waiting lists created by user ${user_id}` })
                 throw error;
             } else {
-                return res.json({
+                return res.status(200).json({
                     message: `successfully retrieved all joined waiting lists created by user ${user_id}`,
                     query_result: result
                 })

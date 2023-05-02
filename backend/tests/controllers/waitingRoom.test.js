@@ -56,7 +56,6 @@ describe('POST create a new waiting list happy case', () => {
         const firstName = data['teaching_assistant_first_name']
         const lastName = data['teaching_assistant_last_name']
         const roomName = data['waiting_room_name']
-        console.log(response.body)
         roomCode = response.body['room_code']
 
         expect(firstName).toMatch('Charmaine');
