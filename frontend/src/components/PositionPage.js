@@ -1,37 +1,45 @@
-import { Box, Button, Typography, Toolbar, AppBar } from '@mui/material';
-import { Link } from 'react-router-dom';
-import logo from '../images/AOWL.png';
-import { makeStyles } from "@mui/styles";
-import Header from "./Header";
+import {Box, Button, Typography, Grid, IconButton} from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
+import { makeStyles } from "@mui/styles";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const useStyles = makeStyles({
-    title: {
-        textAlign: 'center',
-        fontSize: '4rem',
-        fontWeight: 500,
-        color: '#444',
-        marginBottom: '1rem',
-    },
+const useStyles = makeStyles((theme) => ({
     container: {
+        width: "100%",
+        maxWidth: 600,
+        margin: "0 auto",
+        padding: "1rem",
+        [theme.breakpoints.down('xs')]: {
+            padding: '0.5rem',
+        },
+    },
+    title: {
+        textAlign: "center",
+        fontSize: "2rem",
+        fontWeight: 500,
+        color: "#444",
+        marginBottom: "1rem",
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '1.5rem',
+        },
+    },
+    background: {
+        background: 'linear-gradient(135deg, #5B247A 0%, #1B1464 100%)',
+        minHeight: '100vh',
+        minWidth: '100%',
         display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
         alignItems: 'center',
-        minHeight: '82vh',
+        justifyContent: 'center',
     },
-    upperSection: {
-        background: 'linear-gradient(to bottom, #BE50F2, #3888FF)',
-        width: '100%',
+    root: {
+        background: '#FFF',
+        borderRadius: '10px',
+        padding: '1rem',
     },
-    leftpart: {
-        alignItems: 'left',
-    },
-
-});
+}));
 
 const PositionPage = () => {
     const classes = useStyles();
@@ -149,20 +157,38 @@ const PositionPage = () => {
 
 
     return (
+        <Grid container className={classes.background}>
+            <Grid item xs={12} sm={12} md={10} lg={8} xl={6} className={`${classes.container} ${classes.root}`}>
         <Box>
-            <AppBar position="static" sx={{ background: 'linear-gradient(to bottom, #BE50F2, #3888FF)' }}>
-                <Toolbar>
-                    <img src={logo} alt="Logo" className="header-logo" />
-                    <Typography variant="h4" component="h4" className="waiting-room-name" style={{ fontWeight: 'bold' }}>
-                        {roomName}
-                    </Typography>
-                    <Typography variant="h4" component="h4" className="waiting-room-ta" style={{ fontWeight: 'bold' }}>
-                        TA: {teachingAssistantName}
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+            <Box onClick={() => navigate("/dashboard")}>
+                <IconButton sx={{
+                    color: 'black', background: 'white', borderRadius: '50%', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
+                }}>
+                    <ArrowBackIcon sx={{ fontSize: '40px' }} />
+                </IconButton>
+            </Box>
+            <Typography
+                variant="h4"
+                className={classes.title}
+                style={{ color: "black", fontWeight: "bold" }}
+            >
+                Waiting List
+            </Typography>
+            <Typography
+                variant="h6"
+                style={{ textAlign: "center", fontWeight: "bold", marginBottom: "1rem" }}
+            >
+                Room: {roomName} | TA: {teachingAssistantName}
+            </Typography>
 
-            <Box className={classes.container}>
+            <Grid container justifyContent="center">
+            <Box sx={{marginTop: '40px'}}>
+                <Typography variant="h6" className={classes.leftpart}>
+                    &nbsp;Joined as, <b>{firstName} {lastName}</b>
+                </Typography>
+            </Box>
+            </Grid>
+
                 <div className={classes.title}>
                     <Typography variant="h3">
                         <b>Your Position</b>
@@ -171,33 +197,22 @@ const PositionPage = () => {
                         <b>{studentCount}</b>
                     </Typography>
                 </div>
-                <Box style={{ marginTop: '50px' }} onClick={() => removeStudent(studentID)}>
-                    <Button variant="contained" className="shadow" sx={{
-                        color: 'white', borderRadius: '30px', minWidth: '35%',
-                        minHeight: '3rem', background: 'red', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
+                <Grid container justifyContent="right" style={{ marginBottom: '-20px' }}>
+                <Box style={{ marginTop: '150px' }}>
+                    <Button onClick={() => removeStudent(studentID)} variant="contained" className="shadow" sx={{
+                        fontWeight: 'bold', color: 'white', borderRadius: '12px', minWidth: '100%',
+                        minHeight: '3rem', background: '#ff0021', '&:hover': { background: '#660900', opacity: 0.9, transition: '.2s' }
                     }}>
                         Leave Room
                     </Button>
                 </Box>
-                <Box style={{ marginTop: '50px' }} onClick={() => navigate("/dashboard")}>
-                    <Button variant="contained" className="shadow" sx={{
-                        color: 'white', borderRadius: '30px', minWidth: '35%',
-                        minHeight: '3rem', background: 'black', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
-                    }}>
-                        Back to Dashboard
-                    </Button>
-                </Box>
-            </Box>
-            <Box display="flex" >
-                <Typography variant="h4" className={classes.leftpart}>
-                    &nbsp;<b>Name: {firstName} {lastName}</b>
-                </Typography>
-                <div className="room-code-container">
-                    <div className="room-code" sx={{ background: 'linear-gradient(to bottom, #BE50F2, #3888FF)' }}>Room Code: {roomCode}</div>
-                </div>
-            </Box>
-
+            </Grid>
+            <Grid>
+                <Typography sx={{fontWeight: 'bold'}}>Room Code: {roomCode}</Typography>
+            </Grid>
         </Box>
+            </Grid>
+        </Grid>
     );
 }
 

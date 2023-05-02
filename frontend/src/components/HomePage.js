@@ -13,7 +13,10 @@ const HomePage = () => {
 
             <Container maxWidth="sm">
                 <img src={logo} alt="Logo" className={"logo-image"} />
-                <img src={template} alt="phone mockup" className={"mockup-image"} />
+                <Box position="absoulte">
+                    <img src={template} alt="phone mockup" className={"mockup-image"} />
+                </Box>
+
 
                 <Box className="middle-left content">
                     <Typography variant="h3" component="h1" gutterBottom>
@@ -24,7 +27,7 @@ const HomePage = () => {
                     </Typography>
 
                     <Box className="button-home">
-                        <Link to="/login" className="shadow" style={{ textDecoration: 'none' }}>
+                        <Link to="/login" className="" style={{ textDecoration: 'none' }}>
                             <Button variant="contained" className="shadow" sx={{
                                 borderRadius: '30px', minWidth: '35%',
                                 minHeight: '3rem', background: 'linear-gradient(to right, #BE50F2, #3888FF)', '&:hover': { opacity: 0.5, transition: '.2s' }

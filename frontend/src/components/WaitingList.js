@@ -1,41 +1,57 @@
 import {
-    AppBar,
     Avatar,
     Box,
     Button,
     IconButton,
     ListItemAvatar,
     ListItemSecondaryAction,
-    TextField, Toolbar,
-    Typography
-} from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import { useNavigate } from 'react-router-dom';
+    Typography,
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Header from "./Header";
-import logo from "../images/AOWL.png";
-import { auth } from "../firebase"
+import { auth } from "../firebase";
+import { Grid } from "@mui/material";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     container: {
-        width: '100%',
+        width: "100%",
         maxWidth: 600,
-        margin: '0 auto',
-        padding: '1rem',
+        margin: "0 auto",
+        padding: "1rem",
+        [theme.breakpoints.down('xs')]: {
+            padding: '0.5rem',
+        },
     },
     title: {
-        textAlign: 'center',
-        fontSize: '2rem',
+        textAlign: "center",
+        fontSize: "2rem",
         fontWeight: 500,
-        color: '#444',
-        marginBottom: '1rem',
+        color: "#444",
+        marginBottom: "1rem",
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '1.5rem',
+        },
     },
-});
+    background: {
+        background: 'linear-gradient(135deg, #5B247A 0%, #1B1464 100%)',
+        minHeight: '100vh',
+        minWidth: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    root: {
+        background: '#FFF',
+        borderRadius: '10px',
+        padding: '1rem',
+    },
+}));
 
 const WaitingList = () => {
     const classes = useStyles();
@@ -116,65 +132,64 @@ const WaitingList = () => {
     }, [roomCode, studentList]);
 
     return (
-        <div className="waiting-list-view">
-            <AppBar position="static">
-                <Toolbar>
-                    <img src={logo} alt="Logo" className="header-logo" />
-                    <Typography variant="h4" component="h4" className="waiting-room-name" style={{ fontWeight: 'bold' }}>
-                        {roomName}
-                    </Typography>
-                    <Typography variant="h4" component="h4" className="waiting-room-ta" style={{ fontWeight: 'bold' }}>
-                        TA: {firstName} {lastName}
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-
-            <div className={classes.container}>
-                <Typography variant="h4" className={classes.title} style={{ color: 'black', fontWeight: 'bold' }}>
+        <Grid container className={classes.background}>
+            <Grid item xs={12} sm={12} md={10} lg={8} xl={6} className={`${classes.container} ${classes.root}`}>
+                    <Box onClick={() => navigate("/dashboard")}>
+                        <IconButton sx={{
+                            color: 'black', background: 'white', borderRadius: '50%', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
+                        }}>
+                            <ArrowBackIcon sx={{ fontSize: '40px' }} />
+                        </IconButton>
+                    </Box>
+            <Typography
+                    variant="h4"
+                    className={classes.title}
+                    style={{ color: "black", fontWeight: "bold" }}
+                >
                     Waiting List
                 </Typography>
-                <List>
-                    {studentList.map(item => (
-                        <ListItem>
-                            <ListItemAvatar>
-                                <Avatar>{item["student_first_name"][0]}{item["student_last_name"][0]}</Avatar>
-                            </ListItemAvatar>
-                            <ListItemText>
-                                {item["student_first_name"]} {item["student_last_name"]}
-                            </ListItemText>
-                            <ListItemSecondaryAction>
-                                <IconButton edge="end" aria-label="more">
-                                    <MoreVertIcon />
-                                </IconButton>
-                                <Button onClick={() => removeStudent(item["studentID_pk"])}>Remove</Button>
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                    ))}
-                </List>
-            </div>
-            {/* TODO: give delete waiting list the functionality */}
-            <Box style={{ marginTop: '50px' }} onClick={() => navigate("/dashboard")}>
-                <Button onClick={() => deleteRoom()} variant="contained" className="shadow" sx={{
-                    color: 'white', borderRadius: '30px', minWidth: '35%',
-                    minHeight: '3rem', background: 'red', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
-                }}>
-                    End Room
-                </Button>
-            </Box>
-            <Box style={{ marginTop: '50px' }} onClick={() => navigate("/dashboard")}>
-                <Button variant="contained" className="shadow" sx={{
-                    color: 'white', borderRadius: '30px', minWidth: '35%',
-                    minHeight: '3rem', background: 'black', '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
-                }}>
-                    Back to Dashboard
-                </Button>
-            </Box>
+                <Typography
+                    variant="h6"
+                    style={{ textAlign: "center", fontWeight: "bold", marginBottom: "1rem" }}
+                >
+                    Room: {roomName} | TA: {firstName} {lastName}
+                </Typography>
+                    <List>
+                        {studentList.map((item) => (
+                            <ListItem>
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        {item["student_first_name"][0]}
+                                        {item["student_last_name"][0]}
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText>
+                                    {item["student_first_name"]} {item["student_last_name"]}
+                                </ListItemText>
+                                <ListItemSecondaryAction>
+                                        <Button variant="outlined" onClick={() => removeStudent(item["studentID_pk"])}>
+                                            Remove
+                                        </Button>
+                                </ListItemSecondaryAction>
+                            </ListItem>
+                        ))}
+                    </List>
+                <Grid container justifyContent="right" style={{ marginBottom: '-20px' }}>
+                    <Box style={{ marginTop: '50px' }} onClick={() => navigate("/dashboard")}>
+                        <Button onClick={() => deleteRoom()} variant="contained" className="shadow" sx={{
+                            fontWeight: 'bold', color: 'white', borderRadius: '12px', minWidth: '100%',
+                            minHeight: '3rem', background: '#ff0021', '&:hover': { background: '#660900', opacity: 0.9, transition: '.2s' }
+                        }}>
+                            End Room
+                        </Button>
+                    </Box>
+                </Grid>
+                <Grid>
+                    <Typography sx={{fontWeight: 'bold'}}>Room Code: {roomCode}</Typography>
+                </Grid>
 
-            <div className="room-code-container">
-                <div className="room-code">Room Code: {roomCode}</div>
-            </div>
-
-        </div >
+            </Grid>
+        </Grid>
     )
 }
 
