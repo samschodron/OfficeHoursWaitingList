@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Button, Typography, Toolbar, AppBar } from '@mui/material';
 import { Link } from 'react-router-dom';
 import logo from '../images/AOWL.png';
@@ -7,6 +6,7 @@ import Header from "./Header";
 import { useLocation } from 'react-router-dom';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 
 const useStyles = makeStyles({
     title: {
@@ -42,6 +42,7 @@ const PositionPage = () => {
     const roomName = state.roomName
     const teachingAssistantName = state.teachingAssistantName
     console.log(firstName, lastName, roomCode, studentID, roomName, teachingAssistantName)
+    const [studentCount, setStudentCount] = useState(0);
 
     const removeStudent = async (studentID) => {
         const user = auth.currentUser;
@@ -61,6 +62,90 @@ const PositionPage = () => {
         })
         navigate('/dashboard')
     }
+
+    const countlist = async () => {
+        const user = auth.currentUser;
+        const token = user && (await user.getIdToken());
+        
+        
+            let url = `http://localhost:4000/student/studentFind`
+            let response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    
+                    studentID_pk: studentID,
+                    room_code_pk: roomCode
+                }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.status);
+                } else {
+                    return response.json();
+                }
+            })
+                .then(data => {
+                   let position = data["message"];
+                    setStudentCount(position);
+                    
+                })
+               
+        
+    }
+
+    
+    useEffect(() => {
+        countlist()
+
+        const interval = setInterval(() => {
+            countlist();
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [roomCode,studentCount])
+
+    /*const checkStatus = async () => {
+        const user = auth.currentUser;
+        const token = user && (await user.getIdToken());
+    
+        if (roomCode) {
+            let url = `http://localhost:4000/student/studentFind`
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    studentID_pk: studentID,
+                    room_code_pk: roomCode
+                }),
+            })
+                .then(res => res.json())
+                .then(data => {
+                    
+                    let students = data["message"]
+                    setStudentCount(students)
+                    const studentInList=students.some(student=>student.studentID_pk==studentID)
+                    if(!studentInList){
+                       navigate('/dashboard')
+                    }
+                })
+        }
+    }
+    useEffect(() => {
+        checkStatus()
+
+        const interval = setInterval(() => {
+            checkStatus();
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [roomCode,studentCount,studentID]) */
 
 
     return (
@@ -83,7 +168,7 @@ const PositionPage = () => {
                         <b>Your Position</b>
                     </Typography>
                     <Typography fontSize={200}>
-                        <b>3</b>
+                        <b>{studentCount}</b>
                     </Typography>
                 </div>
                 <Box style={{ marginTop: '50px' }} onClick={() => removeStudent(studentID)}>
