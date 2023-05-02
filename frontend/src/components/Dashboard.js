@@ -47,7 +47,7 @@ const Dashboard = () => {
     const getAllOpenWaitingLists = async () => {
         const user = auth.currentUser;
         const token = user && (await user.getIdToken());
-
+        console.log('token: ', token)
         let url = `http://localhost:4000/dashboard/get-all-open-waiting-lists`
         fetch(url, {
             method: "GET",
