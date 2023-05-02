@@ -154,70 +154,71 @@ describe('POST student leaves a waitlist happy case', () => {
 // tests that a student's position in the queue is returned correctly
 // we will be a student into the list
 
-// describe('GET student position in the queue happy case', () => {
-//     let roomCode, lastInsertedId;
+describe('GET student position in the queue happy case', () => {
+    let roomCode, lastInsertedId;
 
-//     // create a new waiting list and add a student to the list
-//     beforeAll(async () => {
-//         let requestBody = JSON.stringify({
-//             teaching_assistant_first_name: 'Charmaine',
-//             teaching_assistant_last_name: 'Seah',
-//             waiting_room_name: 'comp sci 506'
-//         })
+    // create a new waiting list and add a student to the list
+    beforeAll(async () => {
+        let requestBody = JSON.stringify({
+            teaching_assistant_first_name: 'Charmaine',
+            teaching_assistant_last_name: 'Seah',
+            waiting_room_name: 'comp sci 506'
+        })
 
-//         let response = await request(baseUrl)
-//             .post(`/waitingRoom/createWaitingRoom`)
-//             .set({
-//                 'Content-Type': 'application/json',
-//                 Authorization: `Bearer ${token}`,
-//             })
-//             .send(requestBody);
+        let response = await request(baseUrl)
+            .post(`/waitingRoom/createWaitingRoom`)
+            .set({
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            })
+            .send(requestBody);
 
-//         roomCode = response.body['room_code']
+        roomCode = response.body['room_code']
 
-//         // add student to the newly created list
-//         requestBody = JSON.stringify({
-//             student_first_name: 'Jane',
-//             student_last_name: 'Doe',
-//             room_code: roomCode
-//         })
-//         response = await request(baseUrl)
-//             .post('/student/joinWaitingRoom')
-//             .set({
-//                 'Content-Type': 'application/json',
-//                 Authorization: `Bearer ${token}`,
-//             })
-//             .send(requestBody);
+        // add student to the newly created list
+        requestBody = JSON.stringify({
+            student_first_name: 'Jane',
+            student_last_name: 'Doe',
+            room_code: roomCode
+        })
+        response = await request(baseUrl)
+            .post('/student/joinWaitingRoom')
+            .set({
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            })
+            .send(requestBody);
 
-//         lastInsertedId = response.body['last_inserted_id']
-//     })
+        lastInsertedId = response.body['last_inserted_id']
+    })
 
-//     test('should return status code 200', async () => {
-//         requestBody = JSON.stringify({
-//             studentID_pk: lastInsertedId,
-//             room_code_pk: roomCode
-//         })
+    test('should return status code 200', async () => {
+        requestBody = JSON.stringify({
+            studentID_pk: lastInsertedId,
+            room_code_pk: roomCode
+        })
 
-//         const response = await request(baseUrl)
-//             .post('/student/studentFind').set({
-//                 'Content-Type': 'application/json',
-//                 Authorization: `Bearer ${token}`,
-//             })
-//             .send(requestBody);
+        const response = await request(baseUrl)
+            .post('/student/studentFind')
+            .set({
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            })
+            .send(requestBody);
 
-//         console.log(response.body)
-//         expect(response.statusCode).toBe(200);
-//     });
+        expect(response.statusCode).toBe(200);
+    });
 
-//     test('should return the student position which is 1st', async () => {
-//         const response = await request(baseUrl)
-//             .get(`/student/studentFind`)
-//             .set({
-//                 'Content-Type': 'application/json',
-//                 Authorization: `Bearer ${token}`,
-//             })
-//             .send(requestBody);
+    test('should return the student position which is 1st', async () => {
+        const response = await request(baseUrl)
+            .post(`/student/studentFind`)
+            .set({
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            })
+            .send(requestBody);
 
-//         console.log(response.body)
-//     })
-// })
+        const studentPosition = response.body.message
+        expect(studentPosition).toBe(1)
+    })
+})
