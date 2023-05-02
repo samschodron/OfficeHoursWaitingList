@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import {Box, Button, TextField, Typography, Grid, Paper} from '@mui/material';
-import {useNavigate} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Box, Button, TextField, Typography, Grid, Paper } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import createGraphic from '../images/create-graphic.jpg';
-import {auth} from "../firebase"
+import { auth } from "../firebase"
 import logo from "../images/AOWL.png";
 
 const CreateListPage = () => {
@@ -16,7 +16,7 @@ const CreateListPage = () => {
     const handleFormInputChange = (event) => {
         const inputName = event.target.name;
         const inputValue = event.target.value;
-        setFormInput({...formInput, [inputName]: inputValue})
+        setFormInput({ ...formInput, [inputName]: inputValue })
     }
 
     const isEmpty = (str) => {
@@ -53,12 +53,12 @@ const CreateListPage = () => {
             }
         }
         const roomCode = await createWaitingListApi()
-        navigate('/waiting-list', {state: {formInput: formInput, roomCode: roomCode}});
+        navigate('/waiting-list', { state: { formInput: formInput, roomCode: roomCode } });
         return true;
     }
 
     return (
-        <Grid container style={{height: '100vh'}}>
+        <Grid container style={{ height: '100vh' }}>
             <Grid item xs={12} md={6} sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -68,7 +68,7 @@ const CreateListPage = () => {
                 backgroundImage: 'linear-gradient(to bottom, #7b50f2, #b792de)', // Add the gradient background here
             }}>
                 <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" height="100%"
-                     p={3}>
+                    p={3}>
                     <img src={logo} alt="Logo" className={"join-logo"} />
                     <Box
                         sx={{
@@ -80,36 +80,36 @@ const CreateListPage = () => {
                         }}
                     >
                         <Typography variant="h4" component="h4" gutterBottom
-                                    style={{fontWeight: 'bold', marginBottom: '2rem'}}>
+                            style={{ fontWeight: 'bold', marginBottom: '2rem' }}>
                             Create a List
                         </Typography>
                         <Box display="flex" flexDirection="column" width="100%">
                             <Box mt={2}>
-                            <TextField
-                                name="firstName"
-                                label="First Name"
-                                variant="outlined"
-                                fullWidth
-                                onChange={handleFormInputChange}
-                            />
+                                <TextField
+                                    name="firstName"
+                                    label="First Name"
+                                    variant="outlined"
+                                    fullWidth
+                                    onChange={handleFormInputChange}
+                                />
                             </Box>
                             <Box mt={2}>
-                            <TextField
-                                name="lastName"
-                                label="Last Name"
-                                variant="outlined"
-                                fullWidth
-                                onChange={handleFormInputChange}
-                            />
+                                <TextField
+                                    name="lastName"
+                                    label="Last Name"
+                                    variant="outlined"
+                                    fullWidth
+                                    onChange={handleFormInputChange}
+                                />
                             </Box>
                             <Box mt={2}>
-                            <TextField
-                                name="roomName"
-                                label="Room Name"
-                                variant="outlined"
-                                fullWidth
-                                onChange={handleFormInputChange}
-                            />
+                                <TextField
+                                    name="roomName"
+                                    label="Room Name"
+                                    variant="outlined"
+                                    fullWidth
+                                    onChange={handleFormInputChange}
+                                />
                             </Box>
                             <Box mt={3}>
                                 <Button
@@ -123,7 +123,7 @@ const CreateListPage = () => {
                                         minWidth: '100%',
                                         minHeight: '3rem',
                                         background: '#000000',
-                                        '&:hover': {background: '#000000', opacity: 0.7, transition: '.2s'}
+                                        '&:hover': { background: '#000000', opacity: 0.7, transition: '.2s' }
                                     }}>
                                     Create
                                 </Button>
@@ -134,7 +134,7 @@ const CreateListPage = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
                 <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-                    <img src={createGraphic} alt="Computer graphic" style={{width: '100%', maxWidth: '800px'}}/>
+                    <img src={createGraphic} alt="Computer graphic" style={{ width: '100%', maxWidth: '800px' }} />
                 </Box>
             </Grid>
         </Grid>
