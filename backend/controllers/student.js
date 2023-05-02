@@ -142,9 +142,7 @@ export const studentFind = async (req, res) => {
                 }
 
                 return res.json({
-                    message: result,
-                    data,
-                    count
+                    message: count
                 });
             }
         });
