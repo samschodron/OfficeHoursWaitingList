@@ -8,6 +8,22 @@ const baseUrl = `http://localhost:4000`
 
 // tests that it correctly creates a new waiting list
 describe('POST create a new waiting list happy case', () => {
+    let roomCode;
+
+    afterEach(async () => {
+        const requestBody = JSON.stringify({
+            room_code_pk: roomCode
+        })
+
+        const response = await request(baseUrl)
+            .post(`/waitingRoom/destroyWaitingRoom`)
+            .set({
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            })
+            .send(requestBody);
+    })
+
     const requestBody = JSON.stringify({
         teaching_assistant_first_name: 'Charmaine',
         teaching_assistant_last_name: 'Seah',
@@ -23,6 +39,7 @@ describe('POST create a new waiting list happy case', () => {
             })
             .send(requestBody);
 
+        roomCode = response.body['room_code']
         expect(response.statusCode).toBe(200);
     })
 
@@ -39,6 +56,8 @@ describe('POST create a new waiting list happy case', () => {
         const firstName = data['teaching_assistant_first_name']
         const lastName = data['teaching_assistant_last_name']
         const roomName = data['waiting_room_name']
+        console.log(response.body)
+        roomCode = response.body['room_code']
 
         expect(firstName).toMatch('Charmaine');
         expect(lastName).toMatch('Seah');
@@ -79,6 +98,20 @@ describe('GET all students in a waiting list given a room code happy case', () =
         })
         await request(baseUrl)
             .post('/student/joinWaitingRoom').set({
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            })
+            .send(requestBody);
+    })
+
+    afterAll(async () => {
+        const requestBody = JSON.stringify({
+            room_code_pk: roomCode
+        })
+
+        const response = await request(baseUrl)
+            .post(`/waitingRoom/destroyWaitingRoom`)
+            .set({
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
             })

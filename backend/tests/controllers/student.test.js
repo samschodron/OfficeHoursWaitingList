@@ -29,6 +29,20 @@ describe('POST student joins a waitlist happy case', () => {
         roomCode = response.body['room_code']
     })
 
+    afterAll(async () => {
+        const requestBody = JSON.stringify({
+            room_code_pk: roomCode
+        })
+
+        const response = await request(baseUrl)
+            .post(`/waitingRoom/destroyWaitingRoom`)
+            .set({
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            })
+            .send(requestBody);
+    })
+
     test('should return status code 200', async () => {
         requestBody = JSON.stringify({
             student_first_name: 'Jane',
@@ -121,6 +135,20 @@ describe('POST student leaves a waitlist happy case', () => {
         lastInsertedId = response.body['last_inserted_id']
     })
 
+    afterAll(async () => {
+        const requestBody = JSON.stringify({
+            room_code_pk: roomCode
+        })
+
+        const response = await request(baseUrl)
+            .post(`/waitingRoom/destroyWaitingRoom`)
+            .set({
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            })
+            .send(requestBody);
+    })
+
     test('should return status code 200', async () => {
         requestBody = JSON.stringify({
             studentID_pk: lastInsertedId
@@ -190,6 +218,20 @@ describe('GET student position in the queue happy case', () => {
             .send(requestBody);
 
         lastInsertedId = response.body['last_inserted_id']
+    })
+
+    afterAll(async () => {
+        const requestBody = JSON.stringify({
+            room_code_pk: roomCode
+        })
+
+        const response = await request(baseUrl)
+            .post(`/waitingRoom/destroyWaitingRoom`)
+            .set({
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            })
+            .send(requestBody);
     })
 
     test('should return status code 200', async () => {
