@@ -172,7 +172,8 @@ The user interface is going to be made up of three separate entities. There is g
 
 1) Landing screen
 
-![Untitled](Office%20Hours%20Waiting%20List%20c8fd931f568f4ad9a41436febd476028/Untitled.png)
+![Untitled](https://github.com/samschodron/OfficeHoursWaitingList/assets/71097855/9631f0cc-12e4-4b81-ba3a-ae0f83c17fa9)
+
 
 - in this landing screen, the user is presented with two options
     - login
@@ -183,7 +184,7 @@ The user interface is going to be made up of three separate entities. There is g
 
 2) Signup
 
-![Untitled](Office%20Hours%20Waiting%20List%20c8fd931f568f4ad9a41436febd476028/Untitled%201.png)
+![Untitled (1)](https://github.com/samschodron/OfficeHoursWaitingList/assets/71097855/4576cc76-86dc-4ca3-b73e-88d4968b102e)
 
 - required fields
     - email address
@@ -194,19 +195,19 @@ The user interface is going to be made up of three separate entities. There is g
 
 3) Login
 
-![Untitled](Office%20Hours%20Waiting%20List%20c8fd931f568f4ad9a41436febd476028/Untitled%202.png)
+![Untitled (2)](https://github.com/samschodron/OfficeHoursWaitingList/assets/71097855/bdc318cb-d3c3-4536-8f11-1b254a0d048d)
 
 - upon login, the user is redirected to the Dashboard
 
 4) Password Reset
 
-![Untitled](Office%20Hours%20Waiting%20List%20c8fd931f568f4ad9a41436febd476028/Untitled%203.png)
+![Untitled (3)](https://github.com/samschodron/OfficeHoursWaitingList/assets/71097855/fed8dde4-8c26-4d9f-b6dd-32fc50f582f5)
 
 - user will receive a password reset link in their email
 
 5) Dashboard
 
-![Untitled](Office%20Hours%20Waiting%20List%20c8fd931f568f4ad9a41436febd476028/Untitled%204.png)
+![Untitled (4)](https://github.com/samschodron/OfficeHoursWaitingList/assets/71097855/2d133283-4c2b-4240-9842-886a24d098bd)
 
 - user is able to see
     - which account they have signed in with
@@ -217,7 +218,7 @@ The user interface is going to be made up of three separate entities. There is g
 
 6) Create a list
 
-![Untitled](Office%20Hours%20Waiting%20List%20c8fd931f568f4ad9a41436febd476028/Untitled%205.png)
+![Untitled (5)](https://github.com/samschodron/OfficeHoursWaitingList/assets/71097855/0fa7c43a-3498-4b7a-9336-bd052d1b840d)
 
 - the user has selected to create a list in the Dashboard, and is presented with a form to create a list
 - form fields include
@@ -228,7 +229,7 @@ The user interface is going to be made up of three separate entities. There is g
 
 7) Join a list
 
-![Untitled](Office%20Hours%20Waiting%20List%20c8fd931f568f4ad9a41436febd476028/Untitled%206.png)
+![Untitled (6)](https://github.com/samschodron/OfficeHoursWaitingList/assets/71097855/8c0e924f-4797-43b3-89c7-8f6cd8f364e7)
 
 - the user has selected to join a list in the Dashboard, and is presented with a form to enter their name and room code
 - form fields include
@@ -239,14 +240,14 @@ The user interface is going to be made up of three separate entities. There is g
 
 8) Position in the waiting list view
 
-![Untitled](Office%20Hours%20Waiting%20List%20c8fd931f568f4ad9a41436febd476028/Untitled%207.png)
+![Untitled (7)](https://github.com/samschodron/OfficeHoursWaitingList/assets/71097855/b3d44c0b-55c6-4965-aff8-c3f1822f62ca)
 
 - The user has joined a room and can view their position, room name, room code, and TA name
 - There is also an option for the user to ‘Leave Room’ which will make them leave the room and return to the Dashboard
 
 9) admin’s view of the waiting list
 
-![Untitled](Office%20Hours%20Waiting%20List%20c8fd931f568f4ad9a41436febd476028/Untitled%208.png)
+![Untitled (8)](https://github.com/samschodron/OfficeHoursWaitingList/assets/71097855/8519ac5e-9562-4b58-a12c-616abbdd161e)
 
 - The user has created a room and can view a list of users who join the room
 - There is also an option for the user to ‘End Room’ which will close the room and return the user to the home page
@@ -272,11 +273,11 @@ There are a few security requirements in this application.
 
 ### System Design
 
-![Untitled](Office%20Hours%20Waiting%20List%20c8fd931f568f4ad9a41436febd476028/Untitled%209.png)
+![Untitled (9)](https://github.com/samschodron/OfficeHoursWaitingList/assets/71097855/f7e3160f-ae69-4ba3-8ab8-cb8a3aaebabf)
 
 ### Database ERD
 
-![Untitled](Office%20Hours%20Waiting%20List%20c8fd931f568f4ad9a41436febd476028/Untitled%2010.png)
+![Untitled (10)](https://github.com/samschodron/OfficeHoursWaitingList/assets/71097855/bf406623-e3ae-48b5-9e49-db6387163b37)
 
 ## Database design
 
